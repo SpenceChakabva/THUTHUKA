@@ -8,56 +8,56 @@ export default {
   theme: {
     extend: {
       colors: {
+        dark: {
+          DEFAULT: '#121212',
+          surface: '#1E1E1E',
+          card: '#252525',
+          border: '#333333',
+        },
         ivory: {
           DEFAULT: '#F5F0E8',
           warm: '#EDE7D9',
           deep: '#D4CBB8',
-          dark: '#1e1e1e', // Dark mode equivalent
         },
         terracotta: {
           DEFAULT: '#C1440E',
           light: '#E8694A',
           pale: '#F5E2DA',
-          darkpale: '#3A2016', // Dark mode pale equivalent
+          dark: '#E8694A',
         },
         forest: {
           DEFAULT: '#1A3329',
           mid: '#2D5444',
           light: '#4A7C68',
           pale: '#EAF0ED',
-          darkpale: '#1A2923', // Dark mode pale equivalent
         },
         amber: {
           DEFAULT: '#D4820A',
           pale: '#FDF3DC',
-          darkpale: '#3F2C14',
         },
         sage: {
           DEFAULT: '#5A8A6F',
           pale: '#E8F3ED',
-          darkpale: '#1E2C24',
         },
         clay: {
           red: '#9B2818',
           pale: '#FDECEA',
-          darkpale: '#351B18',
         },
         text: {
           primary: '#1A3329',
           secondary: '#4A7C68',
           muted: '#8AA89B',
           inverse: '#F5F0E8',
-          // Dark mode text
           dark: {
-            primary: '#E5E7EB',
-            secondary: '#9CA3AF',
-            muted: '#6B7280',
+            primary: '#F5F0E8',
+            secondary: '#A5B4AD',
+            muted: '#6B8A7E',
           }
         }
       },
       fontFamily: {
         display: ['Outfit', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        body: ['"Plus Jakarta Sans"', 'sans-serif'],
         mono: ['DM Mono', 'JetBrains Mono', 'monospace'],
       },
       boxShadow: {

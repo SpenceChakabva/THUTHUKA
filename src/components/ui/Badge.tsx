@@ -5,11 +5,11 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variants = {
-  verified: 'bg-sage-pale text-sage dark:bg-sage-darkpale dark:text-sage-pale',
-  warning: 'bg-amber-pale text-amber dark:bg-amber-darkpale dark:text-amber-pale',
-  danger: 'bg-clay-pale text-clay-red dark:bg-clay-darkpale dark:text-clay-pale',
-  info: 'bg-forest-pale text-forest-mid dark:bg-forest-darkpale dark:text-forest-pale',
-  neutral: 'bg-ivory-warm text-text-secondary dark:bg-ivory-dark dark:text-text-dark-secondary',
+  verified: 'bg-sage-pale text-sage dark:bg-sage/10 dark:text-sage',
+  warning: 'bg-amber-pale text-amber dark:bg-amber/10 dark:text-amber',
+  danger: 'bg-clay-pale text-clay-red dark:bg-clay-red/10 dark:text-clay-red',
+  info: 'bg-forest-pale text-forest-mid dark:bg-forest-light/10 dark:text-forest-light',
+  neutral: 'bg-ivory-warm text-text-secondary dark:bg-dark-surface dark:text-text-dark-secondary',
 };
 
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(

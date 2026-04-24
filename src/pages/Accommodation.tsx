@@ -110,7 +110,7 @@ export const Accommodation: React.FC = () => {
               <p><strong>Landlord:</strong> {result.landlord}</p>
               <p><strong>Address:</strong> {result.address}</p>
               <p>OCSAS listing: Found — accredited since 2023</p>
-              <hr className="border-0 border-t border-dashed border-ivory-deep dark:border-forest-darkpale my-4" />
+              <hr className="border-0 border-t border-dashed border-ivory-deep dark:border-dark-border my-4" />
               <p>Budget check:<br/>
                 Asking R{result.askingPrice?.toLocaleString()}/month<br/>
                 {isWithinBudget 
@@ -136,7 +136,7 @@ export const Accommodation: React.FC = () => {
                 → Request an inspection before signing<br/>
                 → Never pay a deposit before viewing in person
               </p>
-              <hr className="border-0 border-t border-dashed border-ivory-deep dark:border-forest-darkpale my-4" />
+              <hr className="border-0 border-t border-dashed border-ivory-deep dark:border-dark-border my-4" />
               <p>Budget check: R{result.askingPrice?.toLocaleString()}/month<br/>
                 {isWithinBudget 
                   ? <span className="text-sage dark:text-sage-light font-medium">✓ Within your budget.</span>
@@ -182,7 +182,7 @@ export const Accommodation: React.FC = () => {
                 → You must submit your lease to SFA before moving<br/>
                 → Funding will not be paid for non-accredited private accommodation
               </p>
-              <hr className="border-0 border-t border-dashed border-ivory-deep dark:border-forest-darkpale my-4" />
+              <hr className="border-0 border-t border-dashed border-ivory-deep dark:border-dark-border my-4" />
               <p>Your profile: NSFAS Approved<br/>
                 Action required: Verify with SFA before signing
               </p>
@@ -195,7 +195,7 @@ export const Accommodation: React.FC = () => {
   };
 
   return (
-    <div ref={containerRef} className="max-w-[800px]">
+    <div ref={containerRef} className="max-w-[800px] mx-auto stagger-in">
       <h1 className="text-3xl mb-2">Accommodation checker</h1>
       <p className="text-text-secondary dark:text-text-dark-secondary text-base mb-8 max-w-[600px]">
         Verify any listing against UCT's accredited landlord database before you sign anything.
@@ -224,7 +224,7 @@ export const Accommodation: React.FC = () => {
       <div ref={resultRef} className="mt-8">
         {result && (
           <>
-            <hr className="border-0 border-t border-ivory-deep dark:border-forest-darkpale mb-8" />
+            <hr className="border-0 border-t border-ivory-deep dark:border-dark-border mb-8" />
             {renderResult()}
           </>
         )}

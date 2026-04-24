@@ -12,7 +12,7 @@ const navItems = [
 
 export const BottomTabBar: React.FC = () => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-ivory dark:bg-ivory-dark border-t border-ivory-deep dark:border-forest-darkpale p-2 pb-[max(0.5rem,env(safe-area-inset-bottom,0.5rem))] grid grid-cols-5 gap-1">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-ivory dark:bg-dark-surface border-t border-ivory-deep dark:border-dark-border p-2 pb-[max(0.5rem,env(safe-area-inset-bottom,0.5rem))] grid grid-cols-5 gap-1">
       {navItems.map((item) => (
         <NavLink
           key={item.path}

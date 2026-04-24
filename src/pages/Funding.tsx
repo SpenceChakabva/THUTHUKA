@@ -70,7 +70,7 @@ export const Funding: React.FC = () => {
   ];
 
   return (
-    <div ref={containerRef} className="max-w-[800px]">
+    <div ref={containerRef} className="max-w-[800px] mx-auto stagger-in">
       <div className="flex mb-6 border-b-2 border-ivory-deep dark:border-forest-darkpale relative">
         <button 
           className={`flex-1 bg-transparent border-none p-3 font-body font-semibold text-base cursor-pointer relative transition-colors ${activeTab === 'nsfas' ? 'text-terracotta dark:text-terracotta-light' : 'text-text-secondary dark:text-text-dark-secondary hover:text-text-primary dark:hover:text-text-dark-primary'}`}
@@ -195,7 +195,7 @@ export const Funding: React.FC = () => {
             {draftResult && (
               <div ref={draftRef} className="mt-6 overflow-hidden">
                 <div className="bg-ivory-warm dark:bg-ivory-dark p-4 rounded-lg border border-ivory-deep dark:border-forest-darkpale">
-                  <h4 className="mb-3 text-lg font-bold">AI Drafted Motivation</h4>
+                  <h4 className="mb-3 text-lg font-bold">Heuristic Draft Analysis</h4>
                   <pre className="whitespace-pre-wrap font-body text-sm leading-relaxed text-text-primary dark:text-text-dark-primary mb-4">
                     {draftResult}
                   </pre>

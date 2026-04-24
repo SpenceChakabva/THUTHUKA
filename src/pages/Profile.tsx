@@ -5,10 +5,12 @@ import { Select } from '../components/ui/Select';
 import { Input } from '../components/ui/Input';
 import { Slider } from '../components/ui/Slider';
 import { Button } from '../components/ui/Button';
+import { Download, ShieldCheck, Trash2, Upload } from 'lucide-react';
 
 export const Profile: React.FC = () => {
   const { profile, updateProfile, clearProfile } = useProfile();
   const navigate = useNavigate();
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState<Partial<StudentProfile>>(profile || {});
 
@@ -28,8 +30,48 @@ export const Profile: React.FC = () => {
     }
   };
 
+  const handleExport = () => {
+    const data = {
+      thuthuka_profile: JSON.parse(localStorage.getItem('thuthuka_profile') || 'null'),
+      thuthuka_notes: JSON.parse(localStorage.getItem('thuthuka_notes') || '[]'),
+      thuthuka_events: JSON.parse(localStorage.getItem('thuthuka_events') || '[]'),
+      thuthuka_exams_list: JSON.parse(localStorage.getItem('thuthuka_exams_list') || '[]'),
+    };
+    
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `thuthuka_backup_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const data = JSON.parse(event.target?.result as string);
+        if (data.thuthuka_profile) localStorage.setItem('thuthuka_profile', JSON.stringify(data.thuthuka_profile));
+        if (data.thuthuka_notes) localStorage.setItem('thuthuka_notes', JSON.stringify(data.thuthuka_notes));
+        if (data.thuthuka_events) localStorage.setItem('thuthuka_events', JSON.stringify(data.thuthuka_events));
+        if (data.thuthuka_exams_list) localStorage.setItem('thuthuka_exams_list', JSON.stringify(data.thuthuka_exams_list));
+        
+        alert('Data imported successfully. Refreshing page...');
+        window.location.reload();
+      } catch (err) {
+        alert('Failed to parse backup file.');
+      }
+    };
+    reader.readAsText(file);
+  };
+
   return (
-    <div className="max-w-[800px]">
+    <div className="max-w-[800px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
       <h1 className="text-3xl mb-4">Your profile</h1>
       <hr className="border-0 border-t border-ivory-deep dark:border-forest-darkpale mb-6" />
 
@@ -127,18 +169,33 @@ export const Profile: React.FC = () => {
         </Button>
       </div>
 
-      <div className="mt-8">
-        <hr className="border-0 border-t border-ivory-deep dark:border-forest-darkpale mb-6" />
+      <div className="mt-8 p-6 bg-ivory-warm dark:bg-dark-surface/40 rounded-[2rem] border border-ivory-deep dark:border-dark-border">
         <div className="text-text-secondary dark:text-text-dark-secondary">
-          <h3 className="text-lg text-text-primary dark:text-text-dark-primary mb-2">About your data</h3>
-          <p className="leading-relaxed max-w-[400px]">
-            Everything is stored on your device only.
-            Thuthuka does not collect, store, or transmit
-            any personal information.
+          <h3 className="text-xl text-text-primary dark:text-text-dark-primary mb-3 flex items-center gap-2">
+            <ShieldCheck className="text-sage" size={24} />
+            Privacy & Portability
+          </h3>
+          <p className="leading-relaxed max-w-[500px] mb-6">
+            Thuthuka is built on a **Local-First** philosophy. Your data lives exclusively on this device. You can export a backup to move your data between devices or clear it all instantly.
           </p>
-          <Button variant="danger" size="sm" onClick={handleClear} className="mt-4">
-            Clear all data
-          </Button>
+          <div className="flex flex-wrap gap-4">
+            <Button variant="secondary" size="sm" onClick={handleExport} className="flex items-center gap-2">
+              <Download size={16} /> Export Data Backup
+            </Button>
+            <Button variant="secondary" size="sm" onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2">
+              <Upload size={16} /> Import Data Backup
+            </Button>
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              onChange={handleImport} 
+              className="hidden" 
+              accept=".json"
+            />
+            <Button variant="danger" size="sm" onClick={handleClear} className="flex items-center gap-2">
+              <Trash2 size={16} /> Clear all data
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -6,10 +6,10 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const accents = {
-  verified: 'border-l-4 border-l-sage dark:border-l-sage-pale',
-  warning: 'border-l-4 border-l-amber dark:border-l-amber-pale',
-  danger: 'border-l-4 border-l-clay-red dark:border-l-clay-pale',
-  info: 'border-l-4 border-l-forest-light dark:border-l-forest-pale',
+  verified: 'border-l-4 border-l-sage dark:border-l-sage',
+  warning: 'border-l-4 border-l-amber dark:border-l-amber',
+  danger: 'border-l-4 border-l-clay-red dark:border-l-clay-red',
+  info: 'border-l-4 border-l-forest-light dark:border-l-forest-light',
 };
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
@@ -17,7 +17,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     return (
       <div
         ref={ref}
-        className={`bg-ivory dark:bg-ivory-dark border border-ivory-deep dark:border-forest-darkpale rounded-2xl p-6 shadow-card dark:shadow-dark-card ${
+        className={`bg-white dark:bg-dark-card border border-ivory-deep dark:border-dark-border rounded-2xl p-6 shadow-card dark:shadow-dark-card ${
           interactive ? 'cursor-pointer transition-all duration-fast ease-out hover:-translate-y-1 hover:shadow-float dark:hover:shadow-dark-float' : ''
         } ${accent ? accents[accent] : ''} ${className}`}
         {...props}
