@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, UserCircle, MapPin, CalendarDays, Coins, FileText, Calendar, StickyNote, RefreshCw, Cpu, TrendingUp, MessageSquare } from 'lucide-react';
+import { Bell, UserCircle, MapPin, CalendarDays, Coins, FileText, Calendar, StickyNote, RefreshCw, TrendingUp, MessageSquare, Bot } from 'lucide-react';
 import { useProfile } from '../lib/store';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
@@ -133,6 +133,12 @@ export const Home: React.FC = () => {
             Tactical Deployment
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 stagger-item">
+            <Card interactive className="flex flex-col gap-4 items-start p-5 hover:shadow-float transition-all hover:-translate-y-1 group bg-gradient-to-br from-terracotta/5 to-white/40 dark:from-terracotta/10 dark:to-dark-card/40 backdrop-blur-sm border-none" onClick={() => navigate('/planner')}>
+              <div className="text-terracotta bg-terracotta/10 p-3 rounded-2xl group-hover:bg-terracotta group-hover:text-ivory transition-colors duration-slow">
+                <Bot size={24} />
+              </div>
+              <span className="text-[15px] font-bold text-text-primary dark:text-text-dark-primary leading-tight">AI Planner</span>
+            </Card>
             <Card interactive className="flex flex-col gap-4 items-start p-5 hover:shadow-float transition-all hover:-translate-y-1 group bg-white/40 dark:bg-dark-card/40 backdrop-blur-sm border-none" onClick={() => navigate('/accommodation')}>
               <div className="text-terracotta bg-terracotta/10 p-3 rounded-2xl group-hover:bg-terracotta group-hover:text-ivory transition-colors duration-slow">
                 <MapPin size={24} />

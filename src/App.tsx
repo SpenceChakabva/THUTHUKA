@@ -9,6 +9,7 @@ import { Funding } from './pages/Funding';
 import { Profile } from './pages/Profile';
 import { Calendar } from './pages/Calendar';
 import { Notes } from './pages/Notes';
+import { Planner } from './pages/Planner';
 import { About } from './pages/About';
 import { Privacy } from './pages/Privacy';
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="calendar" element={<Calendar />} />
           <Route path="notes" element={<Notes />} />
+          <Route path="planner" element={<Planner />} />
           <Route path="about" element={<About />} />
           <Route path="privacy" element={<Privacy />} />
         </Route>

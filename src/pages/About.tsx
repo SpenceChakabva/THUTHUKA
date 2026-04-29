@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Lock, Zap, Cpu, Sparkles, Database, Globe, Command } from 'lucide-react';
+import { Shield, Lock, Zap, Sparkles, Database, Globe, Command } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 

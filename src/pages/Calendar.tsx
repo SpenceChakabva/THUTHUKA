@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-import { Calendar as CalendarIcon, Clock, MapPin, RefreshCw, AlertCircle, Share, Plus, Sparkles, BookOpen, Trash2, ChevronRight, X, Layers } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, MapPin, RefreshCw, AlertCircle, Share, Plus, BookOpen, Trash2 } from 'lucide-react';
 import { Badge } from '../components/ui/Badge';
 import { useProfile, type CalendarEvent } from '../lib/store';
 
@@ -132,7 +132,7 @@ export const Calendar: React.FC = () => {
               {/* Timeline Indicator Line */}
               <div className="absolute left-[27px] top-6 bottom-6 w-[2px] bg-gradient-to-b from-terracotta/20 via-sage/20 to-transparent hidden sm:block" />
               
-              {allEvents.map((event, idx) => (
+              {allEvents.map((event) => (
                 <div key={event.id} className="event-card relative pl-0 sm:pl-12 group">
                   {/* Timeline Dot */}
                   <div className={`absolute left-[23px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full border-2 border-ivory bg-white ring-4 transition-all z-10 hidden sm:block ${
@@ -159,9 +159,9 @@ export const Calendar: React.FC = () => {
                             <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
                               <h3 className="text-lg font-bold text-text-primary dark:text-text-dark-primary">{event.title}</h3>
                               {event.type === 'exam' && <BookOpen size={14} className="text-terracotta" />}
-                              {event.days && event.days.length > 0 && (
+                              {'days' in event && (event as any).days?.length > 0 && (
                                 <div className="flex gap-1 ml-1">
-                                  {event.days.map(d => (
+                                  {(event as any).days.map((d: string) => (
                                     <span key={d} className="text-[9px] font-black text-sage uppercase">{d}</span>
                                   ))}
                                 </div>

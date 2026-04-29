@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { secureStorage } from './crypto';
 
 export interface StudentProfile {
   faculty?: string;
@@ -25,47 +26,64 @@ export interface CalendarEvent {
   days?: string[];
 }
 
+export interface PlannerMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: string;
+}
+
 const PROFILE_KEY = 'thuthuka_profile';
 const NOTES_KEY = 'thuthuka_notes';
 const EVENTS_KEY = 'thuthuka_events';
 const EXAMS_KEY = 'thuthuka_exams_list';
+const PLANNER_KEY = 'thuthuka_planner_history';
 
 export function useProfile() {
   const [profile, setProfile] = useState<StudentProfile | null>(() => {
-    const stored = localStorage.getItem(PROFILE_KEY);
+    const stored = secureStorage.getItem(PROFILE_KEY);
     return stored ? JSON.parse(stored) : null;
   });
 
   const [notes, setNotes] = useState<Note[]>(() => {
-    const stored = localStorage.getItem(NOTES_KEY);
+    const stored = secureStorage.getItem(NOTES_KEY);
     return stored ? JSON.parse(stored) : [];
   });
 
   const [events, setEvents] = useState<CalendarEvent[]>(() => {
-    const stored = localStorage.getItem(EVENTS_KEY);
+    const stored = secureStorage.getItem(EVENTS_KEY);
     return stored ? JSON.parse(stored) : [];
   });
 
   const [exams, setExams] = useState<any[]>(() => {
-    const stored = localStorage.getItem(EXAMS_KEY);
+    const stored = secureStorage.getItem(EXAMS_KEY);
+    return stored ? JSON.parse(stored) : [];
+  });
+
+  const [plannerHistory, setPlannerHistory] = useState<PlannerMessage[]>(() => {
+    const stored = secureStorage.getItem(PLANNER_KEY);
     return stored ? JSON.parse(stored) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+    secureStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
   }, [profile]);
 
   useEffect(() => {
-    localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+    secureStorage.setItem(NOTES_KEY, JSON.stringify(notes));
   }, [notes]);
 
   useEffect(() => {
-    localStorage.setItem(EVENTS_KEY, JSON.stringify(events));
+    secureStorage.setItem(EVENTS_KEY, JSON.stringify(events));
   }, [events]);
 
   useEffect(() => {
-    localStorage.setItem(EXAMS_KEY, JSON.stringify(exams));
+    secureStorage.setItem(EXAMS_KEY, JSON.stringify(exams));
   }, [exams]);
+
+  useEffect(() => {
+    secureStorage.setItem(PLANNER_KEY, JSON.stringify(plannerHistory));
+  }, [plannerHistory]);
 
   const updateProfile = (updates: Partial<StudentProfile>) => {
     setProfile(prev => ({ ...prev, ...updates }));
@@ -76,10 +94,8 @@ export function useProfile() {
     setNotes([]);
     setEvents([]);
     setExams([]);
-    localStorage.removeItem(PROFILE_KEY);
-    localStorage.removeItem(NOTES_KEY);
-    localStorage.removeItem(EVENTS_KEY);
-    localStorage.removeItem(EXAMS_KEY);
+    setPlannerHistory([]);
+    secureStorage.clear();
   };
 
   const syncTimetable = () => {
@@ -104,11 +120,12 @@ export function useProfile() {
     setEvents(prev => prev.map(e => e.id === id ? { ...e, ...updates } : e));
   };
 
-  return { 
+  return {
     profile, updateProfile, clearProfile,
-    notes, setNotes, 
+    notes, setNotes,
     events, setEvents, addEvent, deleteEvent, updateEvent,
     exams, setExams,
-    syncTimetable 
+    plannerHistory, setPlannerHistory,
+    syncTimetable
   };
 }

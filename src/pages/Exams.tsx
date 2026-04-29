@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react';
 import { Textarea, Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
-import { AlertTriangle, CheckCircle2, CalendarPlus, Trash2, Plus, Sparkles, Edit2, Save, X, MapPin, Clock, BookOpen } from 'lucide-react';
+import { AlertTriangle, Trash2, Plus, Sparkles, Edit2, Save, MapPin, Clock } from 'lucide-react';
 import { DatePicker } from '../components/ui/DatePicker';
 import { Badge } from '../components/ui/Badge';
 

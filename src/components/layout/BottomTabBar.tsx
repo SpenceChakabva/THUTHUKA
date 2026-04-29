@@ -1,12 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, MapPin, CalendarDays, Coins, User } from 'lucide-react';
+import { Home, MapPin, CalendarDays, Bot, User } from 'lucide-react';
 
 const navItems = [
   { path: '/home', label: 'Home', icon: Home },
+  { path: '/planner', label: 'Planner', icon: Bot },
   { path: '/accommodation', label: 'Accom', icon: MapPin },
   { path: '/exams', label: 'Exams', icon: CalendarDays },
-  { path: '/funding', label: 'Funding', icon: Coins },
   { path: '/profile', label: 'Profile', icon: User },
 ];
 

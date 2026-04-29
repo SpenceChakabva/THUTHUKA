@@ -1,12 +1,11 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Home, MapPin, CalendarDays, Coins, User, Moon, Sun, Calendar, StickyNote, Info } from 'lucide-react';
+import { Home, MapPin, CalendarDays, Coins, User, Moon, Sun, Calendar, StickyNote, Info, Bot } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 
 const navItems = [
   { path: '/home', label: 'Dashboard', icon: Home },
+  { path: '/planner', label: 'AI Planner', icon: Bot },
   { path: '/calendar', label: 'Schedule', icon: Calendar },
   { path: '/notes', label: 'Scratchpad', icon: StickyNote },
   { path: '/accommodation', label: 'Accommodation', icon: MapPin },
@@ -18,22 +17,8 @@ const navItems = [
 
 export const Sidebar: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const sidebarRef = useRef<HTMLElement>(null);
-
-  // Temporarily disabled for visibility troubleshooting
-  /* useGSAP(() => {
-    gsap.from('.nav-link', {
-      x: -20,
-      opacity: 0,
-      stagger: 0.05,
-      duration: 0.5,
-      ease: 'power2.out',
-      delay: 0.2
-    });
-  }, { scope: sidebarRef }); */
-
   return (
-    <aside ref={sidebarRef} className="fixed top-0 left-0 bottom-0 w-[220px] bg-ivory-warm dark:bg-dark-surface border-r border-ivory-deep dark:border-dark-border p-6 flex flex-col z-50 shadow-xl lg:shadow-none animate-in fade-in slide-in-from-left-4 duration-700">
+    <aside className="fixed top-0 left-0 bottom-0 w-[220px] bg-ivory-warm dark:bg-dark-surface border-r border-ivory-deep dark:border-dark-border p-6 flex flex-col z-50 shadow-xl lg:shadow-none animate-in fade-in slide-in-from-left-4 duration-700">
       <Link to="/" className="flex items-center gap-2 mb-10 px-2 group no-underline">
         <div className="w-8 h-8 bg-terracotta rounded-lg flex items-center justify-center text-ivory font-black group-hover:scale-110 transition-transform">T</div>
         <div className="font-display text-xl font-bold text-forest dark:text-ivory-warm tracking-tighter">

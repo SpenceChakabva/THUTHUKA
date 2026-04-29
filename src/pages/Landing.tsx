@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { TextPlugin } from 'gsap/TextPlugin';
-import { MapPin, CalendarDays, Coins, FileText, Calendar, StickyNote, Upload, ShieldCheck, BookOpen, MessageSquare, Database, Heart, Cpu } from 'lucide-react';
+import { MapPin, CalendarDays, Coins, FileText, Calendar, StickyNote, ShieldCheck, BookOpen, Database, Heart, Cpu } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { Chip } from '../components/ui/Chip';
