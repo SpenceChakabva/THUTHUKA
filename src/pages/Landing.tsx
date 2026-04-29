@@ -386,7 +386,7 @@ export const Landing: React.FC = () => {
               We're integrating locally-run AI models to provide tactical insights into your degree. Analyze your lecture recordings and notes without leaking data to corporate clouds.
             </p>
             <div className="mt-auto">
-              <Button variant="secondary" className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-forest transition-colors">
+              <Button variant="secondary" className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-forest transition-colors" onClick={() => navigate('/about')}>
                 Tactical Roadmap
               </Button>
             </div>

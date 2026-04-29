@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useProfile, type PlannerMessage } from '../lib/store';
-import { sendChatMessage, buildContext } from '../lib/ai';
+import { sendChatMessage, buildContext, checkRateLimit } from '../lib/ai';
 import { Button } from '../components/ui/Button';
 import {
   Send,
@@ -93,6 +93,10 @@ export const Planner: React.FC = () => {
       const data = await sendChatMessage({
         messages: updated.map((m) => ({ role: m.role, content: m.content })),
         context,
+        ...(profile?.apiProvider && profile.apiProvider !== 'server' && profile?.apiKey
+          ? { clientKey: profile.apiKey }
+          : {}),
+        ...(profile?.apiProvider === 'openai' ? { provider: 'openai' } : {}),
       });
 
       const assistantMsg: PlannerMessage = {
@@ -104,10 +108,13 @@ export const Planner: React.FC = () => {
 
       setMessages((prev) => [...prev, assistantMsg]);
     } catch (err: any) {
+      const msg = err.message || '';
       setError(
-        err.message === 'AI service not configured'
-          ? 'The AI service is not configured yet. Add your ANTHROPIC_API_KEY to the Vercel environment variables.'
-          : 'Could not reach the AI service. Check your connection and try again.',
+        msg.includes('Rate limit')
+          ? msg
+          : msg === 'AI service not configured'
+            ? 'The AI service is not configured yet. Add your API key in the Vercel environment variables or in Profile > AI Settings.'
+            : 'Could not reach the AI service. Check your connection and try again.',
       );
     } finally {
       setLoading(false);
@@ -225,7 +232,12 @@ export const Planner: React.FC = () => {
         </div>
       )}
 
-      {/* Input bar */}
+      {/* Rate limit + Input bar */}
+      {checkRateLimit() <= 5 && (
+        <div className="text-xs text-text-muted text-center mb-1 shrink-0">
+          {checkRateLimit()} messages remaining this hour
+        </div>
+      )}
       <div className="flex gap-3 items-end bg-white/40 dark:bg-dark-card/40 backdrop-blur-sm p-3 rounded-2xl border border-ivory-deep dark:border-dark-border shrink-0">
         {messages.length > 0 && (
           <button

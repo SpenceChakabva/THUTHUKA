@@ -8,6 +8,8 @@ export interface StudentProfile {
   budget?: number;
   homeProvince?: string;
   registeredCredits?: number;
+  apiKey?: string;
+  apiProvider?: 'server' | 'anthropic' | 'openai';
 }
 
 export interface Note {

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile, type StudentProfile } from '../lib/store';
+import { secureStorage } from '../lib/crypto';
 import { Select } from '../components/ui/Select';
 import { Input } from '../components/ui/Input';
 import { Slider } from '../components/ui/Slider';
 import { Button } from '../components/ui/Button';
-import { Download, ShieldCheck, Trash2, Upload } from 'lucide-react';
+import { Download, ShieldCheck, Trash2, Upload, Bot, Key, Server } from 'lucide-react';
 
 export const Profile: React.FC = () => {
   const { profile, updateProfile, clearProfile } = useProfile();
@@ -32,12 +33,12 @@ export const Profile: React.FC = () => {
 
   const handleExport = () => {
     const data = {
-      thuthuka_profile: JSON.parse(localStorage.getItem('thuthuka_profile') || 'null'),
-      thuthuka_notes: JSON.parse(localStorage.getItem('thuthuka_notes') || '[]'),
-      thuthuka_events: JSON.parse(localStorage.getItem('thuthuka_events') || '[]'),
-      thuthuka_exams_list: JSON.parse(localStorage.getItem('thuthuka_exams_list') || '[]'),
+      thuthuka_profile: JSON.parse(secureStorage.getItem('thuthuka_profile') || 'null'),
+      thuthuka_notes: JSON.parse(secureStorage.getItem('thuthuka_notes') || '[]'),
+      thuthuka_events: JSON.parse(secureStorage.getItem('thuthuka_events') || '[]'),
+      thuthuka_exams_list: JSON.parse(secureStorage.getItem('thuthuka_exams_list') || '[]'),
     };
-    
+
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -56,11 +57,11 @@ export const Profile: React.FC = () => {
     reader.onload = (event) => {
       try {
         const data = JSON.parse(event.target?.result as string);
-        if (data.thuthuka_profile) localStorage.setItem('thuthuka_profile', JSON.stringify(data.thuthuka_profile));
-        if (data.thuthuka_notes) localStorage.setItem('thuthuka_notes', JSON.stringify(data.thuthuka_notes));
-        if (data.thuthuka_events) localStorage.setItem('thuthuka_events', JSON.stringify(data.thuthuka_events));
-        if (data.thuthuka_exams_list) localStorage.setItem('thuthuka_exams_list', JSON.stringify(data.thuthuka_exams_list));
-        
+        if (data.thuthuka_profile) secureStorage.setItem('thuthuka_profile', JSON.stringify(data.thuthuka_profile));
+        if (data.thuthuka_notes) secureStorage.setItem('thuthuka_notes', JSON.stringify(data.thuthuka_notes));
+        if (data.thuthuka_events) secureStorage.setItem('thuthuka_events', JSON.stringify(data.thuthuka_events));
+        if (data.thuthuka_exams_list) secureStorage.setItem('thuthuka_exams_list', JSON.stringify(data.thuthuka_exams_list));
+
         alert('Data imported successfully. Refreshing page...');
         window.location.reload();
       } catch (err) {
@@ -169,6 +170,69 @@ export const Profile: React.FC = () => {
         </Button>
       </div>
 
+      {/* AI Settings */}
+      <div className="mt-8 p-6 bg-ivory-warm dark:bg-dark-surface/40 rounded-[2rem] border border-ivory-deep dark:border-dark-border">
+        <div className="text-text-secondary dark:text-text-dark-secondary">
+          <h3 className="text-xl text-text-primary dark:text-text-dark-primary mb-3 flex items-center gap-2">
+            <Bot className="text-terracotta" size={24} />
+            AI Planner Settings
+          </h3>
+          <p className="leading-relaxed max-w-[500px] mb-6 text-sm">
+            Choose how the AI Study Planner connects to Claude. Use the server key (set by the admin) or bring your own Anthropic API key.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 mb-6">
+            {[
+              { id: 'server' as const, icon: Server, label: 'Server Key', desc: 'Uses the key set on Vercel' },
+              { id: 'anthropic' as const, icon: Key, label: 'Anthropic (BYOK)', desc: 'Your own Claude API key' },
+              { id: 'openai' as const, icon: Key, label: 'OpenAI (BYOK)', desc: 'Your own OpenAI API key' },
+            ].map(opt => (
+              <button
+                key={opt.id}
+                onClick={() => handleChange('apiProvider', opt.id)}
+                className={`flex-1 flex items-center gap-3 p-4 rounded-2xl border-2 transition-all text-left ${
+                  (formData.apiProvider || 'server') === opt.id
+                    ? 'border-terracotta bg-terracotta/5 dark:bg-terracotta/10'
+                    : 'border-ivory-deep dark:border-dark-border bg-white/30 dark:bg-dark-card/30 hover:border-terracotta/40'
+                }`}
+              >
+                <opt.icon size={20} className="text-terracotta shrink-0" />
+                <div>
+                  <span className="block text-sm font-bold text-text-primary dark:text-text-dark-primary">{opt.label}</span>
+                  <span className="block text-xs text-text-muted">{opt.desc}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {(formData.apiProvider === 'anthropic' || formData.apiProvider === 'openai') && (
+            <div className="mb-4 max-w-[400px] animate-in slide-in-from-top-2 duration-300">
+              <label className="block font-medium text-text-primary dark:text-text-dark-primary mb-2 text-sm">
+                {formData.apiProvider === 'openai' ? 'OpenAI' : 'Anthropic'} API Key
+              </label>
+              <Input
+                type="password"
+                placeholder={formData.apiProvider === 'openai' ? 'sk-...' : 'sk-ant-...'}
+                value={formData.apiKey || ''}
+                onChange={(e) => handleChange('apiKey', e.target.value)}
+              />
+              <p className="text-xs text-text-muted mt-2">
+                Stored encrypted on this device only. Get one at{' '}
+                <a
+                  href={formData.apiProvider === 'openai' ? 'https://platform.openai.com/api-keys' : 'https://console.anthropic.com/'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-terracotta hover:underline"
+                >
+                  {formData.apiProvider === 'openai' ? 'platform.openai.com' : 'console.anthropic.com'}
+                </a>
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Privacy & Portability */}
       <div className="mt-8 p-6 bg-ivory-warm dark:bg-dark-surface/40 rounded-[2rem] border border-ivory-deep dark:border-dark-border">
         <div className="text-text-secondary dark:text-text-dark-secondary">
           <h3 className="text-xl text-text-primary dark:text-text-dark-primary mb-3 flex items-center gap-2">

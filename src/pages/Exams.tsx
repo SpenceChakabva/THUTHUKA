@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Textarea, Input } from '../components/ui/Input';
@@ -7,6 +7,7 @@ import { Card } from '../components/ui/Card';
 import { AlertTriangle, Trash2, Plus, Sparkles, Edit2, Save, MapPin, Clock } from 'lucide-react';
 import { DatePicker } from '../components/ui/DatePicker';
 import { Badge } from '../components/ui/Badge';
+import { useProfile } from '../lib/store';
 
 interface Exam {
   id: string;
@@ -17,22 +18,12 @@ interface Exam {
   venue: string;
 }
 
-const EXAMS_KEY = 'thuthuka_exams_list';
-
 export const Exams: React.FC = () => {
+  const { exams, setExams } = useProfile();
   const [timetableText, setTimetableText] = useState('');
   const [isAnalysing, setIsAnalysing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editFormData, setEditFormData] = useState<Exam | null>(null);
-  
-  const [exams, setExams] = useState<Exam[]>(() => {
-    const stored = localStorage.getItem(EXAMS_KEY);
-    return stored ? JSON.parse(stored) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem(EXAMS_KEY, JSON.stringify(exams));
-  }, [exams]);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const { contextSafe } = useGSAP({ scope: containerRef });
@@ -49,7 +40,7 @@ export const Exams: React.FC = () => {
       setExams([...exams, ...newExams]);
       setIsAnalysing(false);
       setTimetableText('');
-      
+
       gsap.from('.exam-card', {
         y: 20,
         opacity: 0,
@@ -61,7 +52,7 @@ export const Exams: React.FC = () => {
   });
 
   const deleteExam = (id: string) => {
-    setExams(exams.filter(e => e.id !== id));
+    setExams(exams.filter((e: any) => e.id !== id));
   };
 
   const startEditing = (exam: Exam) => {
@@ -76,7 +67,7 @@ export const Exams: React.FC = () => {
 
   const saveEdit = () => {
     if (editFormData && editingId) {
-      setExams(exams.map(e => e.id === editingId ? editFormData : e));
+      setExams(exams.map((e: any) => e.id === editingId ? editFormData : e));
       setEditingId(null);
       setEditFormData(null);
     }
@@ -110,7 +101,7 @@ export const Exams: React.FC = () => {
             Stay ahead of the registration density.
           </p>
         </div>
-        
+
         <div className="flex flex-wrap gap-3 stagger-item">
           <Button onClick={addManualExam} className="shadow-md px-8">
             <Plus size={18} /> Add Paper
@@ -135,7 +126,7 @@ export const Exams: React.FC = () => {
             </div>
           ) : (
             <div className="flex flex-col gap-3">
-              {exams.map((exam) => (
+              {exams.map((exam: any) => (
                 <Card key={exam.id} className={`exam-card p-5 group transition-all border-none ${editingId === exam.id ? 'bg-white shadow-xl ring-2 ring-terracotta/20' : 'bg-white/60 backdrop-blur-sm hover:shadow-float'}`}>
                   {editingId === exam.id ? (
                     <div className="flex flex-col gap-4">
@@ -150,10 +141,10 @@ export const Exams: React.FC = () => {
                         </div>
                       </div>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                          <DatePicker 
-                            label="Deployment Date" 
-                            value={editFormData?.date} 
-                            onChange={(e) => setEditFormData(prev => prev ? {...prev, date: e.target.value} : null)} 
+                          <DatePicker
+                            label="Deployment Date"
+                            value={editFormData?.date}
+                            onChange={(e) => setEditFormData(prev => prev ? {...prev, date: e.target.value} : null)}
                           />
                           <div className="flex flex-col gap-1">
                             <label className="text-[10px] font-bold uppercase text-text-muted">Time</label>
@@ -195,13 +186,13 @@ export const Exams: React.FC = () => {
                         </div>
                       </div>
                       <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all">
-                        <button 
+                        <button
                           onClick={() => startEditing(exam)}
                           className="p-2 text-text-muted hover:text-forest transition-colors"
                         >
                           <Edit2 size={18} />
                         </button>
-                        <button 
+                        <button
                           onClick={() => deleteExam(exam.id)}
                           className="p-2 text-text-muted hover:text-terracotta transition-colors"
                         >
@@ -226,14 +217,14 @@ export const Exams: React.FC = () => {
               <p className="text-sm opacity-80 mb-6 leading-relaxed">
                 Paste your timetable text from the UCT portal, and I'll extract all the dates and venues for you.
               </p>
-              <Textarea 
+              <Textarea
                 placeholder="Paste here..."
                 className="bg-white/10 border-white/20 text-ivory placeholder:text-ivory/30 min-h-[120px] mb-4 text-sm focus:bg-white/20 transition-all"
                 value={timetableText}
                 onChange={(e) => setTimetableText(e.target.value)}
               />
-              <Button 
-                variant="primary" 
+              <Button
+                variant="primary"
                 className="w-full bg-ivory text-forest hover:bg-ivory-warm active:scale-95"
                 onClick={handleAnalyse}
                 isLoading={isAnalysing}

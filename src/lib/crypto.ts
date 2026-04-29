@@ -12,7 +12,7 @@
 
 const SALT_KEY = 'thuthuka_enc_salt';
 const ENC_PREFIX = 'enc:';
-const EXCLUDED_KEYS = new Set([SALT_KEY, 'thuthuka_consent']);
+const EXCLUDED_KEYS = new Set([SALT_KEY, 'thuthuka_consent', 'thuthuka_rate_log']);
 
 class SecureStorage {
   private cache = new Map<string, string>();
