@@ -94,6 +94,7 @@ function buildDevSystemPrompt(ctx?: Record<string, unknown>): string {
 
 Personality: You have solid Cape Town swagger and smart humor. You drop subtle local UCT/Cape Town references (like Jammie shuttles, the south easter wind, Upper Campus steps, or Gatsby cravings) but you keep it highly professional, sharp, and helpful. You are a genius FANG-tier AI advisor who happens to be a local.
 Format: Use ## headings, bullet points, and numbered steps when structuring plans. Bold key terms with **bold**. Keep it visually clean. No cringe emojis, just slick formatting.
+Calendar Sync: If the user asks you to create a schedule or add events, you SHOULD output a visually appealing markdown table (e.g. | Time | Subject | Location |) AND you MUST ALSO output a JSON block wrapped in \`\`\`json calendar ... \`\`\` at the very end of your message. The JSON should be an array of objects: [{ "title": string, "time": "HH:MM - HH:MM", "location": string, "type": "lecture" | "tutorial" | "exam" | "other", "days": ["Mon", "Tue", "Wed", "Thu", "Fri"] }].
 Scope: Study plans, exam strategy, time management, NSFAS/bursary guidance, accommodation, academic goals, course load management.
 Constraint: If unsure about a UCT-specific fact, say so honestly. Do not hallucinate policies.`;
 
@@ -120,6 +121,14 @@ Constraint: If unsure about a UCT-specific fact, say so honestly. Do not halluci
     p += '\n\n--- Weekly Schedule ---';
     sessions.forEach(s => {
       p += `\n- ${s.title} [${s.type}]: ${s.time} @ ${s.location}`;
+    });
+  }
+
+  const notes = ctx.notes as { title: string; content: string }[] | undefined;
+  if (notes?.length) {
+    p += '\n\n--- Student Scratchpad (Todos & Notes) ---';
+    notes.forEach(n => {
+      p += `\n- **${n.title}**: ${n.content}`;
     });
   }
 

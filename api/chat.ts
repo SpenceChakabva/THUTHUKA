@@ -40,7 +40,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       content: String(m.content).slice(0, MAX_CONTENT_LENGTH),
     }));
 
-  if (sanitised.length === 0) {
+  let finalMessages = sanitised;
+
+  if (!clientKey && finalMessages.length > 8) {
+    // Strictly limit context size when using the default/server API key
+    finalMessages = finalMessages.slice(-8);
+    // Anthropic API strictly requires the first message to be from 'user'
+    while (finalMessages.length > 0 && finalMessages[0].role !== 'user') {
+      finalMessages.shift();
+    }
+  }
+
+  if (finalMessages.length === 0) {
     return res.status(400).json({ error: 'No valid messages provided' });
   }
 
@@ -48,8 +59,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const text = isOpenAI
-      ? await callOpenAI(apiKey, systemPrompt, sanitised)
-      : await callAnthropic(apiKey, systemPrompt, sanitised);
+      ? await callOpenAI(apiKey, systemPrompt, finalMessages)
+      : await callAnthropic(apiKey, systemPrompt, finalMessages);
 
     return res.status(200).json({ message: text });
   } catch (err: unknown) {
@@ -135,6 +146,7 @@ function buildSystemPrompt(ctx?: Context): string {
 
 Personality: You have solid Cape Town swagger and smart humor. You drop subtle local UCT/Cape Town references (like Jammie shuttles, the south easter wind, Upper Campus steps, or Gatsby cravings) but you keep it highly professional, sharp, and helpful. You are a genius FANG-tier AI advisor who happens to be a local.
 Format: Use ## headings, bullet points, and numbered steps when structuring plans. Bold key terms with **bold**. Keep it visually clean. No cringe emojis, just slick formatting.
+Calendar Sync: If the user asks you to create a schedule or add events, you SHOULD output a visually appealing markdown table (e.g. | Time | Subject | Location |) AND you MUST ALSO output a JSON block wrapped in \`\`\`json calendar ... \`\`\` at the very end of your message. The JSON should be an array of objects: [{ "title": string, "time": "HH:MM - HH:MM", "location": string, "type": "lecture" | "tutorial" | "exam" | "other", "days": ["Mon", "Tue", "Wed", "Thu", "Fri"] }].
 Scope: Study plans, exam strategy, time management, NSFAS/bursary guidance, accommodation, academic goals, course load management.
 Constraint: If unsure about a UCT-specific fact, say so honestly. Do not hallucinate policies.`;
 
@@ -161,6 +173,14 @@ Constraint: If unsure about a UCT-specific fact, say so honestly. Do not halluci
     p += '\n\n--- Weekly Schedule ---';
     sessions.forEach(s => {
       p += `\n- ${s.title} [${s.type}]: ${s.time} @ ${s.location}`;
+    });
+  }
+
+  const notes = ctx.notes as { title: string; content: string }[] | undefined;
+  if (notes?.length) {
+    p += '\n\n--- Student Scratchpad (Todos & Notes) ---';
+    notes.forEach(n => {
+      p += `\n- **${n.title}**: ${n.content}`;
     });
   }
 

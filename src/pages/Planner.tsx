@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProfile, type PlannerMessage } from '../lib/store';
 import { sendChatMessage, buildContext, checkRateLimit, isAIError } from '../lib/ai';
 import { Button } from '../components/ui/Button';
@@ -15,6 +16,10 @@ import {
   AlertCircle,
   RefreshCw,
   ChevronDown,
+  Copy,
+  Check,
+  CalendarPlus,
+  Clock,
 } from 'lucide-react';
 
 // ─── Quick actions ────────────────────────────────────────────────────────────
@@ -49,8 +54,59 @@ function renderMarkdown(text: string): React.ReactNode[] {
   const lines = text.split('\n');
   const nodes: React.ReactNode[] = [];
 
+  let inTable = false;
+  let tableHeader: string[] = [];
+  let tableRows: string[][] = [];
+
+  const flushTable = () => {
+    if (tableHeader.length > 0) {
+      nodes.push(
+        <div key={`table-${nodes.length}`} className="overflow-x-auto my-4 rounded-xl border border-ivory-deep dark:border-dark-border">
+          <table className="w-full text-sm text-left">
+            <thead className="bg-forest/5 dark:bg-white/5 text-xs uppercase text-text-muted">
+              <tr>
+                {tableHeader.map((th, i) => (
+                  <th key={`th-${i}`} className="px-4 py-3 font-bold">{inlineFormat(th)}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-ivory-deep dark:divide-dark-border">
+              {tableRows.map((row, i) => (
+                <tr key={`tr-${i}`} className="hover:bg-forest/5 dark:hover:bg-white/5 transition-colors">
+                  {row.map((td, j) => (
+                    <td key={`td-${j}`} className="px-4 py-3 text-text-primary dark:text-text-dark-primary">{inlineFormat(td)}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+      tableHeader = [];
+      tableRows = [];
+      inTable = false;
+    }
+  };
+
   lines.forEach((line, lineIdx) => {
     const key = `line-${lineIdx}`;
+
+    // Table processing
+    if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+      const cells = line.trim().split('|').slice(1, -1).map(c => c.trim());
+      // Skip separator lines
+      if (cells.every(c => c.replace(/-/g, '').trim() === '')) return;
+      
+      if (!inTable) {
+        inTable = true;
+        tableHeader = cells;
+      } else {
+        tableRows.push(cells);
+      }
+      return;
+    } else {
+      flushTable();
+    }
 
     // Heading
     if (line.startsWith('### ')) {
@@ -95,7 +151,6 @@ function renderMarkdown(text: string): React.ReactNode[] {
       return;
     }
 
-    // Normal paragraph
     nodes.push(
       <p key={key} className="text-[14px] leading-[1.65] mb-2 last:mb-0 text-text-primary dark:text-text-dark-primary/90">
         {inlineFormat(line)}
@@ -103,8 +158,120 @@ function renderMarkdown(text: string): React.ReactNode[] {
     );
   });
 
+  flushTable();
+
   return nodes;
 }
+
+/** Extracts JSON calendar blocks and renders normal text vs action blocks */
+const MessageRenderer: React.FC<{ content: string }> = ({ content }) => {
+  const { events, setEvents } = useProfile();
+  const navigate = useNavigate();
+  const [added, setAdded] = useState(false);
+
+  // Regex to match `json calendar` or ```json calendar``` blocks more robustly
+  const parts = content.split(/`{1,3}(?:json\s*calendar|calendar)\s*([\s\S]*?)(?:`{1,3}|$)/i);
+
+  return (
+    <div className="space-y-0.5">
+      {parts.map((part, i) => {
+        if (i % 2 === 0) {
+          // Normal text
+          return <React.Fragment key={i}>{renderMarkdown(part)}</React.Fragment>;
+        }
+
+        // Calendar JSON block
+        try {
+          let cleanPart = part.trim();
+          
+          // Auto-fix truncated JSON array (common with LLM rate limits/cutoffs)
+          if (cleanPart.startsWith('[') && !cleanPart.endsWith(']')) {
+            const lastBrace = cleanPart.lastIndexOf('}');
+            if (lastBrace > -1) {
+              cleanPart = cleanPart.substring(0, lastBrace + 1) + ']';
+            } else {
+              throw new Error("Incomplete JSON array with no objects");
+            }
+          }
+
+          const parsed = JSON.parse(cleanPart);
+          const scheduleEvents = Array.isArray(parsed) ? parsed : [parsed];
+
+          const newEvents = scheduleEvents.map((e: any, idx: number) => ({
+            id: Date.now() + idx,
+            title: e.title || 'Study Session',
+            type: e.type || 'study',
+            time: e.time || '09:00 - 10:00',
+            location: e.location || 'Library',
+            days: e.days || ['Mon'],
+          }));
+
+          const eventsToAdd = newEvents.filter(newEvent => {
+            return !events.some(existing => 
+              existing.title === newEvent.title && 
+              existing.time === newEvent.time
+            );
+          });
+
+          const isFullySynced = eventsToAdd.length === 0 && events.length > 0; // only true if we actually checked against existing events
+
+          const handleAdd = () => {
+            if (eventsToAdd.length > 0) {
+              setEvents([...events, ...eventsToAdd]);
+            }
+            setAdded(true);
+            setTimeout(() => setAdded(false), 3000);
+          };
+
+          return (
+            <div key={i} className="my-4 p-4 bg-forest/5 dark:bg-dark-surface rounded-xl border border-forest/10 dark:border-dark-border">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted mb-3 flex items-center gap-2">
+                <CalendarPlus size={14} />
+                Schedule Preview ({scheduleEvents.length} events)
+              </h4>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                {scheduleEvents.slice(0, 4).map((e: any, idx: number) => (
+                  <div key={idx} className="bg-white/60 dark:bg-black/20 p-2.5 rounded-lg border border-ivory-deep/50 dark:border-white/5 flex flex-col gap-1.5 shadow-sm">
+                    <div className="flex justify-between items-start">
+                      <span className="font-bold text-sm text-text-primary dark:text-text-dark-primary truncate pr-2">{e.title}</span>
+                      <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-terracotta/10 text-terracotta shrink-0">
+                        {e.days?.[0] || 'Day'}
+                      </span>
+                    </div>
+                    <span className="text-[11px] opacity-70 flex items-center gap-1 font-medium"><Clock size={12}/> {e.time}</span>
+                  </div>
+                ))}
+              </div>
+              
+              {scheduleEvents.length > 4 && <div className="text-xs opacity-60 font-medium text-center mb-3">+{scheduleEvents.length - 4} more sessions...</div>}
+              
+              <div className="flex gap-2 mt-2">
+                <Button 
+                  size="sm" 
+                  disabled={isFullySynced}
+                  onClick={handleAdd} 
+                  className="flex-1 bg-forest text-ivory hover:bg-forest-mid border-none shadow-sm h-9 text-sm font-bold disabled:opacity-50"
+                >
+                  {added || isFullySynced ? <Check size={16} className="mr-2" /> : <CalendarPlus size={16} className="mr-2" />}
+                  {added ? 'Synced' : isFullySynced ? 'Already Synced' : 'Sync to Calendar'}
+                </Button>
+                {(added || isFullySynced) && (
+                  <Button size="sm" variant="secondary" onClick={() => navigate('/calendar')} className="flex-1 border-ivory-deep dark:border-dark-border h-9 text-sm font-bold animate-in fade-in slide-in-from-right-4">
+                    View Calendar
+                  </Button>
+                )}
+              </div>
+            </div>
+          );
+        } catch (err) {
+          // If JSON parse fails, just render as text
+          return <React.Fragment key={i}>{renderMarkdown(part)}</React.Fragment>;
+        }
+      })}
+    </div>
+  );
+};
 
 /** Handle **bold**, `code`, and plain text inline. */
 function inlineFormat(text: string): React.ReactNode[] {
@@ -168,7 +335,7 @@ const TypingDots: React.FC = () => (
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export const Planner: React.FC = () => {
-  const { profile, exams, events, plannerHistory, setPlannerHistory } = useProfile();
+  const { profile, exams, events, notes, plannerHistory, setPlannerHistory } = useProfile();
   const [messages, setMessages] = useState<PlannerMessage[]>(plannerHistory);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -221,7 +388,7 @@ export const Planner: React.FC = () => {
     setLoading(true);
 
     try {
-      const context = buildContext(profile, exams, events);
+      const context = buildContext(profile, exams, events, notes);
       const data = await sendChatMessage({
         messages: updated.map(({ role, content: c }) => ({ role, content: c })),
         context,
@@ -349,7 +516,7 @@ export const Planner: React.FC = () => {
 
                 <div className="flex flex-col max-w-[82%]">
                   <div
-                    className={`relative rounded-3xl px-5 py-4 shadow-sm animate-in zoom-in-95 duration-300 ${
+                    className={`relative rounded-3xl px-5 py-4 shadow-sm animate-in zoom-in-95 duration-300 group/bubble ${
                       msg.role === 'user'
                         ? 'bg-forest text-ivory rounded-br-sm shadow-forest/20'
                         : 'bg-white/80 dark:bg-dark-card/80 text-text-primary dark:text-text-dark-primary border border-ivory-deep dark:border-dark-border/50 rounded-bl-sm backdrop-blur-md hover:shadow-float transition-shadow duration-500'
@@ -358,7 +525,16 @@ export const Planner: React.FC = () => {
                     {msg.role === 'user' ? (
                       <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                     ) : (
-                      <div className="space-y-0.5">{renderMarkdown(msg.content)}</div>
+                      <>
+                        <MessageRenderer content={msg.content} />
+                        <button
+                          onClick={() => navigator.clipboard.writeText(msg.content)}
+                          className="absolute -right-2 -top-2 opacity-0 group-hover/bubble:opacity-100 transition-opacity bg-white dark:bg-dark-surface border border-ivory-deep dark:border-dark-border p-1.5 rounded-lg shadow-sm text-text-muted hover:text-terracotta focus:opacity-100"
+                          title="Copy message"
+                        >
+                          <Copy size={14} />
+                        </button>
+                      </>
                     )}
                   </div>
                   <span className={`text-[10px] text-text-muted mt-1 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>

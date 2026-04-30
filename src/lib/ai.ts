@@ -117,6 +117,7 @@ export function buildContext(
   profile: StudentProfile | null,
   exams: Exam[],
   events: CalendarEvent[],
+  notes: { title: string; content: string; date: string }[] = [],
 ): Record<string, unknown> | undefined {
   if (!profile) return undefined;
 
@@ -148,8 +149,9 @@ export function buildContext(
     ...safeProfile,
     upcomingExams,
     activeSessions,
+    notes: notes.map((n) => ({ title: n.title, content: n.content })),
     currentDate: now.toISOString().split('T')[0],
-    currentMonth: now.toLocaleString('en-ZA', { month: 'long' }),
+    currentMonth: now.toLocaleString('en-US', { month: 'long' }),
   };
 }
 

@@ -380,7 +380,7 @@ export const Landing: React.FC = () => {
           <div className="relative z-10 h-full flex flex-col">
             <div className="flex items-center gap-3 mb-4">
               <Cpu className="w-8 h-8 text-amber" />
-              <h3 className="text-xl font-display font-bold italic">Synthetic Intelligence</h3>
+              <h3 className="text-xl font-display font-bold italic text-inherit">Synthetic Intelligence</h3>
             </div>
             <p className="text-[15px] leading-relaxed opacity-80 mb-8">
               We're integrating locally-run AI models to provide tactical insights into your degree. Analyze your lecture recordings and notes without leaking data to corporate clouds.

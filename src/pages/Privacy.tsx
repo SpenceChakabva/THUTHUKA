@@ -20,7 +20,7 @@ export const Privacy: React.FC = () => {
         <Card className="p-6 sm:p-10 border-none bg-ivory-warm/40 dark:bg-forest-darkpale/20 backdrop-blur-md relative overflow-hidden">
           <div className="relative z-10">
             <ServerOff className="text-terracotta mb-6" size={40} />
-            <h2 className="text-2xl font-black text-text-primary dark:text-text-dark-primary mb-4 uppercase tracking-tighter">Zero Server Footprint</h2>
+            <h2 className="text-2xl font-black text-inherit mb-4 uppercase tracking-tighter">Zero Server Footprint</h2>
             <p className="text-text-secondary dark:text-text-dark-secondary leading-relaxed opacity-80">
               Unlike traditional SaaS platforms, Thuthuka has no central database for user data. Every piece of information—from your registered credits to your private notes—is written to your browser's local storage engine.
             </p>
@@ -31,7 +31,7 @@ export const Privacy: React.FC = () => {
         <Card className="p-6 sm:p-10 border-none bg-forest text-ivory relative overflow-hidden">
           <div className="relative z-10">
             <EyeOff className="text-terracotta-light mb-6" size={40} />
-            <h2 className="text-2xl font-black mb-4 uppercase tracking-tighter">Stealth Architecture</h2>
+            <h2 className="text-2xl font-black text-inherit mb-4 uppercase tracking-tighter">Stealth Architecture</h2>
             <p className="opacity-80 leading-relaxed">
               We do not use analytics trackers, heatmaps, or third-party marketing pixels. Your navigation through the Thuthuka engine is mathematically private. No one—not even us—knows how you use the tool.
             </p>

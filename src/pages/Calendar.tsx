@@ -52,13 +52,10 @@ export const Calendar: React.FC = () => {
 
   const handleSync = contextSafe(() => {
     setIsSyncing(true);
-    gsap.to('.sync-btn', { rotate: 360, repeat: -1, duration: 1, ease: 'none' });
     
     setTimeout(() => {
       syncTimetable();
       setIsSyncing(false);
-      gsap.killTweensOf('.sync-btn');
-      gsap.set('.sync-btn', { rotate: 0 });
     }, 1500);
   });
 
@@ -212,7 +209,7 @@ export const Calendar: React.FC = () => {
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-6">
                 <BookOpen className="text-amber" size={24} />
-                <h3 className="text-xl font-bold">Manual Entry</h3>
+                <h3 className="text-xl font-bold text-inherit">Manual Entry</h3>
               </div>
               
               {!showAddForm ? (
@@ -229,7 +226,7 @@ export const Calendar: React.FC = () => {
                     <label className="text-[10px] font-bold uppercase opacity-60 tracking-wider">Session Title</label>
                     <Input 
                       placeholder="e.g. CSC2001F Tutorial" 
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/30 h-10"
+                      className="h-10"
                       value={newEvent.title || ''}
                       onChange={e => setNewEvent({...newEvent, title: e.target.value})}
                     />
@@ -238,7 +235,7 @@ export const Calendar: React.FC = () => {
                     <label className="text-[10px] font-bold uppercase opacity-60 tracking-wider">Time Window</label>
                     <Input 
                       placeholder="09:00 - 10:00" 
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/30 h-10"
+                      className="h-10"
                       value={newEvent.time || ''}
                       onChange={e => setNewEvent({...newEvent, time: e.target.value})}
                     />
@@ -247,7 +244,7 @@ export const Calendar: React.FC = () => {
                     <label className="text-[10px] font-bold uppercase opacity-60 tracking-wider">Deployment Venue</label>
                     <Input 
                       placeholder="RW James 3A" 
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/30 h-10"
+                      className="h-10"
                       value={newEvent.location || ''}
                       onChange={e => setNewEvent({...newEvent, location: e.target.value})}
                     />

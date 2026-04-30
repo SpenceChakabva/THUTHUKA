@@ -77,7 +77,7 @@ export const About: React.FC = () => {
         <Card className="p-8 bg-forest text-ivory border-none relative overflow-hidden group">
           <div className="relative z-10">
             <Database className="text-terracotta mb-6" size={40} />
-            <h3 className="text-2xl font-bold mb-4 italic">The Architecture of Privacy.</h3>
+            <h3 className="text-2xl font-bold text-inherit mb-4 italic">The Architecture of Privacy.</h3>
             <p className="opacity-80 leading-relaxed mb-8">
               We don't "scrape" or "track". We empower. By utilizing native browser APIs, we've created a tool that is functionally robust yet architecturally invisible to trackers.
             </p>

@@ -276,7 +276,7 @@ export const Exams: React.FC = () => {
           {/* SI Quick-Scan card */}
           <Card className="p-5 sm:p-6 bg-forest text-ivory border-none shadow-float overflow-hidden relative group">
             <div className="relative z-10">
-              <h3 className="text-base font-bold mb-3 flex items-center gap-2">
+              <h3 className="text-base font-bold text-inherit mb-3 flex items-center gap-2">
                 <Brain size={18} className="text-amber" />
                 Quick-Scan
               </h3>
@@ -285,7 +285,7 @@ export const Exams: React.FC = () => {
               </p>
               <Textarea
                 placeholder="Paste timetable text here…"
-                className="bg-white/10 border-white/20 text-ivory placeholder:text-ivory/30 min-h-[100px] mb-4 text-sm focus:bg-white/20 transition-all"
+                className="min-h-[100px] mb-4 text-sm transition-all"
                 value={timetableText}
                 onChange={(e) => setTimetableText(e.target.value)}
               />
