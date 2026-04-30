@@ -101,7 +101,7 @@ function buildInsight(
   }
 
   return {
-    text: 'Set up your profile, add your exams, and build your schedule. The more data you add, the more tactical this dashboard becomes.',
+    text: 'Set up your profile, add your exams, and build your schedule. The more you fill in, the more useful this dashboard becomes.',
     stat: 'Getting started',
     urgency: 'low',
   };
@@ -159,7 +159,7 @@ interface ToolItem {
 }
 
 const TOOLS: ToolItem[] = [
-  { label: 'SI Planner', icon: Brain, href: '/planner', highlight: true, badge: 'AI' },
+  { label: 'AI Planner', icon: Brain, href: '/planner', highlight: true, badge: 'AI' },
   { label: 'Accommodation', icon: MapPin, href: '/accommodation' },
   { label: 'Exam Planner', icon: CalendarDays, href: '/exams' },
   { label: 'Schedule', icon: Calendar, href: '/calendar' },
@@ -223,7 +223,7 @@ export const Home: React.FC = () => {
             {greeting}{profile?.year ? `, ${profile.year} buddy` : ''}.
           </h1>
           <p className="text-text-secondary dark:text-text-dark-secondary text-xs sm:text-sm mt-0.5">
-            Ready for the tactical push?
+            What are we working on today?
           </p>
         </div>
         <div className="flex items-center gap-1 shrink-0">
@@ -270,7 +270,7 @@ export const Home: React.FC = () => {
 
         {/* Synthetic Intelligence Insight */}
         <Card
-          className={`flex flex-col gap-3 bg-forest dark:bg-dark-card text-ivory border border-solid ${urgencyBorder} shadow-md overflow-hidden relative group p-5 sm:p-6`}
+          className={`flex flex-col gap-3 !bg-forest dark:!bg-dark-card text-ivory border border-solid ${urgencyBorder} shadow-md overflow-hidden relative group p-5 sm:p-6`}
         >
           <div className="relative z-10 flex flex-col h-full gap-3">
             <div className="flex items-center gap-2">
@@ -279,7 +279,7 @@ export const Home: React.FC = () => {
                 <div className="absolute inset-0 w-2 h-2 bg-amber rounded-full animate-ping opacity-40" />
               </div>
               <span className="font-display text-sm font-bold tracking-wide italic text-ivory/90">
-                Tactical Insight
+                Your Insight
               </span>
               {insight.urgency === 'high' && (
                 <span className="ml-auto text-[10px] font-bold uppercase tracking-widest bg-terracotta/80 text-ivory px-2 py-0.5 rounded-full">
@@ -302,7 +302,7 @@ export const Home: React.FC = () => {
                 className="flex items-center gap-1 text-[11px] font-bold text-amber/80 hover:text-amber transition-colors"
               >
                 <Zap size={11} />
-                Ask SI
+                Ask AI
               </button>
             </div>
           </div>
@@ -314,7 +314,7 @@ export const Home: React.FC = () => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 stagger-item">
 
         {/* Budget Ring */}
-        <StatCard onClick={() => navigate('/funding')} className="bg-ivory-warm/60 dark:bg-dark-card/60">
+        <StatCard onClick={() => navigate('/funding')} className="bg-white dark:bg-dark-card/60">
           <MiniRing pct={budgetPct} color={budgetPct >= 100 ? '#5A8A6F' : '#C1440E'} />
           <div className="text-center">
             <span className="block text-base sm:text-lg font-black text-forest dark:text-ivory-warm">
@@ -325,7 +325,7 @@ export const Home: React.FC = () => {
         </StatCard>
 
         {/* Exam Countdown */}
-        <StatCard onClick={() => navigate('/exams')} className="bg-ivory-warm/60 dark:bg-dark-card/60">
+        <StatCard onClick={() => navigate('/exams')} className="bg-white dark:bg-dark-card/60">
           <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-terracotta/10 flex items-center justify-center">
             {daysToNextExam !== null ? (
               <span className="text-lg sm:text-xl font-black text-terracotta">{daysToNextExam}</span>
@@ -344,7 +344,7 @@ export const Home: React.FC = () => {
         </StatCard>
 
         {/* Sessions Count */}
-        <StatCard onClick={() => navigate('/calendar')} className="bg-ivory-warm/60 dark:bg-dark-card/60">
+        <StatCard onClick={() => navigate('/calendar')} className="bg-white dark:bg-dark-card/60">
           <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-sage/10 flex items-center justify-center">
             <span className="text-lg sm:text-xl font-black text-sage">{events.length}</span>
           </div>
@@ -357,7 +357,7 @@ export const Home: React.FC = () => {
         </StatCard>
 
         {/* NSFAS Status */}
-        <StatCard onClick={() => navigate('/funding')} className="bg-ivory-warm/60 dark:bg-dark-card/60">
+        <StatCard onClick={() => navigate('/funding')} className="bg-white dark:bg-dark-card/60">
           <div
             className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center ${nsfasApproved ? 'bg-sage/10' : 'bg-amber/10'}`}
           >
@@ -375,7 +375,7 @@ export const Home: React.FC = () => {
       {/* ── Quick-access tools ── */}
       <section className="stagger-item">
         <h3 className="text-[11px] sm:text-[13px] font-bold text-text-muted dark:text-text-dark-muted mb-4 uppercase tracking-[0.18em]">
-          Tactical Deployment
+          Quick Access
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {TOOLS.map((tool) => (
@@ -390,7 +390,7 @@ export const Home: React.FC = () => {
               className={`flex flex-col gap-3 items-start p-4 sm:p-5 hover:shadow-float transition-all hover:-translate-y-1 group backdrop-blur-sm border-none ${
                 tool.highlight
                   ? 'bg-gradient-to-br from-forest to-forest-mid text-ivory'
-                  : 'bg-white/50 dark:bg-dark-card/50'
+                  : 'bg-white dark:bg-dark-card/50'
               }`}
             >
               <div

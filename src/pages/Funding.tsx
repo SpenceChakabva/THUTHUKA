@@ -539,7 +539,7 @@ Yours sincerely,
 
             {/* Footer */}
             {draftResult && (
-              <div className="px-5 sm:px-6 py-4 border-t border-ivory-deep dark:border-dark-border bg-ivory-warm/30 dark:bg-dark-surface/30 shrink-0">
+              <div className="px-5 sm:px-6 py-4 border-t border-ivory-deep dark:border-dark-border bg-ivory-warm dark:bg-dark-surface/30 shrink-0">
                 <p className="text-[11px] text-text-muted leading-relaxed">
                   Review and personalise this draft before submitting. Replace placeholders in [brackets] with your details.
                 </p>

@@ -38,7 +38,7 @@ export const Notes: React.FC = () => {
             Scratchpad.
           </h1>
           <p className="text-base text-text-secondary dark:text-text-dark-secondary font-medium">
-            Quick thoughts, lecture bits, life admin.
+            Quick thoughts, lecture notes, and reminders.
           </p>
         </div>
         <Button size="sm" onClick={addNote} className="shadow-md px-6 shrink-0 active:scale-95 transition-transform">
@@ -47,11 +47,11 @@ export const Notes: React.FC = () => {
       </div>
 
       {notes.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 px-6 text-center bg-ivory-warm/40 dark:bg-dark-card/30 rounded-[2rem] border-2 border-dashed border-ivory-deep dark:border-forest-mid/30">
+        <div className="flex flex-col items-center justify-center py-24 px-6 text-center bg-ivory-warm dark:bg-dark-card/30 rounded-[2rem] border-2 border-dashed border-ivory-deep dark:border-forest-mid/30">
           <StickyNote size={48} strokeWidth={1.5} className="mb-4 text-terracotta opacity-40" />
           <h3 className="text-lg font-bold text-text-primary dark:text-text-dark-primary mb-1">Your scratchpad is empty</h3>
           <p className="text-text-secondary dark:text-text-dark-secondary text-sm max-w-sm">
-            Start a thought, paste a link, or jot down an upcoming deadline. It all syncs locally.
+            Start a thought, paste a link, or jot down a deadline. Everything saves automatically.
           </p>
           <Button variant="secondary" size="sm" onClick={addNote} className="mt-6 shadow-sm border-none bg-white dark:bg-dark-surface hover:bg-ivory-warm">
             Create first note
@@ -62,7 +62,7 @@ export const Notes: React.FC = () => {
           {notes.map(note => (
             <Card 
               key={note.id} 
-              className="p-5 sm:p-6 relative group bg-white/60 dark:bg-dark-card/60 backdrop-blur-md border-none shadow-sm transition-all hover:shadow-float focus-within:shadow-float focus-within:bg-white dark:focus-within:bg-dark-card"
+              className="p-5 sm:p-6 relative group bg-white dark:bg-dark-card/60 border-none shadow-sm transition-all hover:shadow-float focus-within:shadow-float focus-within:bg-white dark:focus-within:bg-dark-card"
             >
               {/* Delete Button */}
               <button

@@ -96,7 +96,7 @@ export const Calendar: React.FC = () => {
             <div className="w-2 h-2 rounded-full bg-sage animate-pulse" />
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-forest dark:text-ivory-warm tracking-tighter leading-none mb-3">
-            Tactical<br className="hidden sm:block" /> Deployment.
+            Your<br className="hidden sm:block" /> Schedule.
           </h1>
           <p className="text-base sm:text-lg text-text-secondary dark:text-text-dark-secondary font-medium">
             {new Date().toLocaleDateString('en-ZA', { weekday: 'long', day: 'numeric', month: 'long' })}
@@ -104,7 +104,7 @@ export const Calendar: React.FC = () => {
         </div>
 
         <div className="flex flex-wrap gap-2 sm:gap-3 stagger-item w-full sm:w-auto">
-          <Button variant="secondary" size="sm" onClick={exportToICal} className="bg-white/40 border-none backdrop-blur-md shadow-sm flex-1 sm:flex-none">
+          <Button variant="secondary" size="sm" onClick={exportToICal} className="bg-white dark:bg-dark-card/40 border-none shadow-sm flex-1 sm:flex-none">
             <Share size={16} /> Export
           </Button>
           <Button size="sm" onClick={handleSync} disabled={isSyncing} className="sync-btn shadow-md flex-1 sm:flex-none">
@@ -124,10 +124,10 @@ export const Calendar: React.FC = () => {
           </div>
 
           {allEvents.length === 0 ? (
-            <Card className="py-24 px-10 bg-ivory-warm/20 border-dashed border-2 border-ivory-deep text-center">
+            <Card className="py-24 px-10 bg-ivory-warm dark:bg-dark-card/20 border-dashed border-2 border-ivory-deep dark:border-dark-border text-center">
                <CalendarIcon size={64} strokeWidth={1} className="mx-auto mb-6 text-text-muted opacity-20" />
                <h3 className="text-xl font-bold mb-2">Your slate is clean</h3>
-               <p className="text-text-secondary max-w-xs mx-auto">Sync your UCT timetable or add your custom lectures manually to begin deployment.</p>
+               <p className="text-text-secondary max-w-xs mx-auto">Sync your UCT timetable or add your lectures manually to get started.</p>
             </Card>
           ) : (
             <div className="flex flex-col gap-4 relative">
@@ -144,7 +144,7 @@ export const Calendar: React.FC = () => {
                   <Card className={`p-0 overflow-hidden border-none shadow-none hover:shadow-float transition-all duration-slow ${
                     event.type === 'exam' 
                       ? 'bg-gradient-to-r from-terracotta/10 to-transparent border-l-4 border-l-terracotta' 
-                      : 'bg-white/40 dark:bg-dark-card/20 backdrop-blur-md hover:bg-white/60'
+                      : 'bg-white dark:bg-dark-card/20 hover:bg-ivory-warm dark:hover:bg-dark-card/40'
                   }`}>
                     <div className="flex flex-col sm:flex-row items-stretch">
                       <div className="p-5 flex-1 flex flex-col sm:flex-row items-center gap-6">
@@ -205,11 +205,11 @@ export const Calendar: React.FC = () => {
 
         {/* Tactical Control Sidebar */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-8 stagger-item">
-          <Card className="p-6 bg-forest text-ivory border-none shadow-xl overflow-hidden relative group">
+          <Card className="p-6 !bg-forest text-ivory border-none shadow-xl overflow-hidden relative group">
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-6">
                 <BookOpen className="text-amber" size={24} />
-                <h3 className="text-xl font-bold text-inherit">Manual Entry</h3>
+                <h3 className="text-xl font-bold text-ivory">Manual Entry</h3>
               </div>
               
               {!showAddForm ? (
@@ -232,7 +232,7 @@ export const Calendar: React.FC = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-1">
-                    <label className="text-[10px] font-bold uppercase opacity-60 tracking-wider">Time Window</label>
+                    <label className="text-[10px] font-bold uppercase opacity-60 tracking-wider">Time Slot</label>
                     <Input 
                       placeholder="09:00 - 10:00" 
                       className="h-10"
@@ -241,7 +241,7 @@ export const Calendar: React.FC = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-1">
-                    <label className="text-[10px] font-bold uppercase opacity-60 tracking-wider">Deployment Venue</label>
+                    <label className="text-[10px] font-bold uppercase opacity-60 tracking-wider">Venue</label>
                     <Input 
                       placeholder="RW James 3A" 
                       className="h-10"
@@ -250,7 +250,7 @@ export const Calendar: React.FC = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-1 mt-1">
-                    <label className="text-[10px] font-bold uppercase opacity-60 tracking-wider">Tactical Cycle (Days)</label>
+                    <label className="text-[10px] font-bold uppercase opacity-60 tracking-wider">Repeat Days</label>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {DAYS.map(day => (
                         <button
@@ -283,7 +283,7 @@ export const Calendar: React.FC = () => {
             <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-terracotta/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
           </Card>
 
-          <Card className="p-6 bg-ivory-warm/40 dark:bg-dark-card/40 border-none">
+          <Card className="p-6 bg-ivory-warm dark:bg-dark-card/40 border-none">
             <div className="flex items-start gap-3">
               <AlertCircle className="text-terracotta shrink-0" size={20} />
               <div>

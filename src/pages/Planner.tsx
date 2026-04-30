@@ -232,7 +232,7 @@ const MessageRenderer: React.FC<{ content: string }> = ({ content }) => {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
                 {scheduleEvents.slice(0, 4).map((e: any, idx: number) => (
-                  <div key={idx} className="bg-white/60 dark:bg-black/20 p-2.5 rounded-lg border border-ivory-deep/50 dark:border-white/5 flex flex-col gap-1.5 shadow-sm">
+                  <div key={idx} className="bg-white dark:bg-black/20 p-2.5 rounded-lg border border-ivory-deep dark:border-white/5 flex flex-col gap-1.5 shadow-sm">
                     <div className="flex justify-between items-start">
                       <span className="font-bold text-sm text-text-primary dark:text-text-dark-primary truncate pr-2">{e.title}</span>
                       <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-terracotta/10 text-terracotta shrink-0">
@@ -443,10 +443,10 @@ export const Planner: React.FC = () => {
         <div className="flex items-start justify-between gap-3">
           <div>
             <h1 className="text-2xl sm:text-3xl font-display font-bold text-forest dark:text-ivory-warm leading-tight">
-              SI Planner
+              AI Study Planner
             </h1>
             <p className="text-text-secondary dark:text-text-dark-secondary text-sm mt-0.5">
-              Synthetic Intelligence — powered by Claude.
+              Your personal study assistant, powered by Claude.
             </p>
           </div>
           {messages.length > 0 && (
@@ -482,7 +482,7 @@ export const Planner: React.FC = () => {
               <button
                 key={action.label}
                 onClick={() => sendMessage(action.prompt)}
-                className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/60 dark:bg-dark-card/60 border border-ivory-deep dark:border-dark-border/40 text-left hover:shadow-float hover:bg-white dark:hover:bg-dark-card transition-all group"
+                className="flex items-center gap-3 p-3.5 rounded-2xl bg-white dark:bg-dark-card/60 border border-ivory-deep dark:border-dark-border/40 text-left hover:shadow-float hover:bg-ivory-warm dark:hover:bg-dark-card transition-all group"
               >
                 <div className="p-2 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-ivory group-hover:scale-110 transition-all shrink-0 duration-300">
                   <action.icon size={15} />
@@ -519,7 +519,7 @@ export const Planner: React.FC = () => {
                     className={`relative rounded-3xl px-5 py-4 shadow-sm animate-in zoom-in-95 duration-300 group/bubble ${
                       msg.role === 'user'
                         ? 'bg-forest text-ivory rounded-br-sm shadow-forest/20'
-                        : 'bg-white/80 dark:bg-dark-card/80 text-text-primary dark:text-text-dark-primary border border-ivory-deep dark:border-dark-border/50 rounded-bl-sm backdrop-blur-md hover:shadow-float transition-shadow duration-500'
+                        : 'bg-white dark:bg-dark-card/80 text-text-primary dark:text-text-dark-primary border border-ivory-deep dark:border-dark-border/50 rounded-bl-sm hover:shadow-float transition-shadow duration-500'
                     }`}
                   >
                     {msg.role === 'user' ? (
@@ -557,7 +557,7 @@ export const Planner: React.FC = () => {
                 <div className="w-7 h-7 bg-gradient-to-br from-forest to-forest-mid text-ivory rounded-xl flex items-center justify-center shrink-0">
                   <Brain size={13} />
                 </div>
-                <div className="bg-white/70 dark:bg-dark-card/70 rounded-2xl rounded-bl-md px-4 py-3 border border-ivory-deep dark:border-dark-border">
+                <div className="bg-white dark:bg-dark-card/70 rounded-2xl rounded-bl-md px-4 py-3 border border-ivory-deep dark:border-dark-border">
                   <TypingDots />
                 </div>
               </div>
@@ -586,7 +586,7 @@ export const Planner: React.FC = () => {
       )}
 
       {/* ── Input bar ── */}
-      <div className="mt-4 flex gap-3 items-end bg-white/70 dark:bg-dark-card/70 backdrop-blur-xl p-3.5 rounded-[2rem] border border-ivory-deep dark:border-dark-border/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all duration-500 shrink-0 transform translate-y-0">
+      <div className="mt-4 flex gap-3 items-end bg-white dark:bg-dark-card/70 backdrop-blur-xl p-3.5 rounded-[2rem] border border-ivory-deep dark:border-dark-border/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all duration-500 shrink-0 transform translate-y-0">
         {messages.length > 0 && (
           <button
             onClick={clearChat}
@@ -603,7 +603,7 @@ export const Planner: React.FC = () => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           onInput={autoResize}
-          placeholder="Ask about study plans, exams, time management…"
+          placeholder="Ask about study plans, exam prep, time management…"
           rows={1}
           disabled={loading}
           className="flex-1 bg-transparent border-none outline-none resize-none text-[15px] font-medium text-text-primary dark:text-text-dark-primary placeholder:text-text-muted/50 min-h-[44px] max-h-[140px] py-2.5 px-2 disabled:opacity-50 custom-scrollbar"

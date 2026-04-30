@@ -66,7 +66,7 @@ export const Landing: React.FC = () => {
     if (typingTextRef.current) {
       gsap.to(typingTextRef.current, {
         duration: 1.5,
-        text: "reinforcements.",
+        text: "back.",
         ease: "none",
         delay: 0.5
       });
@@ -165,8 +165,8 @@ export const Landing: React.FC = () => {
         {/* Left Column */}
         <div className="flex flex-col w-full text-center lg:text-left items-center lg:items-start">
           <h1 className="text-[clamp(36px,8vw,64px)] font-display font-bold text-forest dark:text-ivory-warm tracking-tight leading-[1.05] mb-8 stagger-item">
-            UCT is a battle.<br />
-            We're your <span ref={typingTextRef} className="text-terracotta dark:text-terracotta-light inline-block min-h-[1.2em]"></span>
+            UCT is a lot to manage.<br />
+            We have your <span ref={typingTextRef} className="text-terracotta dark:text-terracotta-light inline-block min-h-[1.2em]"></span>
             <span className="animate-pulse inline-block w-1 h-[0.8em] bg-terracotta dark:bg-terracotta-light ml-1 align-baseline"></span>
           </h1>
 
@@ -175,7 +175,7 @@ export const Landing: React.FC = () => {
             {!isSettingUp && (
               <div ref={introRef} className="col-start-1 row-start-1 w-full flex flex-col items-center lg:items-start">
                 <p className="text-base sm:text-lg md:text-xl text-text-secondary dark:text-text-dark-secondary max-w-[480px] leading-relaxed mb-8 stagger-item">
-                  Managing your UCT degree is a full-time job. Thuthuka provides the tactical infrastructure to handle the admin so you can focus on the academics.
+                  Managing your UCT degree is a full-time job. Thuthuka handles the admin side so you can focus on the academics.
                 </p>
                 <div className="flex flex-wrap items-center gap-3 mt-8 stagger-item">
                   {profile ? (
@@ -191,10 +191,10 @@ export const Landing: React.FC = () => {
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-6 text-[13px] sm:text-[14px] text-text-muted dark:text-text-dark-muted font-medium stagger-item">
                   <div className="flex items-center gap-1.5 px-2 py-0.5 bg-sage/10 rounded-full">
                     <ShieldCheck className="w-3.5 h-3.5 text-sage" />
-                    <span>Local-first architecture</span>
+                    <span>Offline-first</span>
                   </div>
                   <span className="text-ivory-deep dark:text-forest-darkpale">·</span>
-                  <span>Zero server-side tracking</span>
+                  <span>No tracking, no cookies</span>
                   <span className="text-ivory-deep dark:text-forest-darkpale">·</span>
                   <span>Built for UCT</span>
                 </div>
@@ -267,12 +267,12 @@ export const Landing: React.FC = () => {
             {/* System Status Micro-interaction */}
             <div className="absolute bottom-6 left-6 bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 flex items-center gap-3 z-20">
                <div className="w-2 h-2 bg-sage rounded-full animate-pulse shadow-[0_0_8px_rgba(122,158,126,0.8)]"></div>
-               <span className="text-[11px] font-bold uppercase tracking-wider text-ivory">Core Engine Active</span>
+               <span className="text-[11px] font-bold uppercase tracking-wider text-ivory">All Systems Ready</span>
             </div>
 
             {/* Buddy Personality Traits */}
             <div className="absolute top-10 -left-6 z-20 stagger-item">
-              <Card className="p-3 bg-white/40 dark:bg-dark-card/80 backdrop-blur-lg border-white/20 dark:border-dark-border shadow-xl rotate-[-4deg] flex items-center gap-3 max-w-[180px]">
+              <Card className="p-3 bg-white/90 dark:bg-dark-card/80 backdrop-blur-lg border-white/40 dark:border-dark-border shadow-xl rotate-[-4deg] flex items-center gap-3 max-w-[180px]">
                 <div className="w-8 h-8 bg-terracotta/20 rounded-lg flex items-center justify-center text-terracotta">
                   <Heart className="w-4 h-4 fill-terracotta/40" />
                 </div>
@@ -284,12 +284,12 @@ export const Landing: React.FC = () => {
             </div>
 
             <div className="absolute bottom-20 -right-4 z-20 stagger-item delay-200">
-              <Card className="p-3 bg-white/40 dark:bg-dark-card/80 backdrop-blur-lg border-white/20 dark:border-dark-border shadow-xl rotate-[3deg] flex items-center gap-3 max-w-[180px]">
+              <Card className="p-3 bg-white/90 dark:bg-dark-card/80 backdrop-blur-lg border-white/40 dark:border-dark-border shadow-xl rotate-[3deg] flex items-center gap-3 max-w-[180px]">
                 <div className="w-8 h-8 bg-sage/20 rounded-lg flex items-center justify-center text-sage">
                   <Database className="w-4 h-4" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-bold uppercase tracking-tighter opacity-60">Sovereignty</span>
+                  <span className="text-[10px] font-bold uppercase tracking-tighter opacity-60">Your Data</span>
                   <span className="text-[13px] font-bold text-forest dark:text-ivory-warm">User-Owned</span>
                 </div>
               </Card>
@@ -311,42 +311,42 @@ export const Landing: React.FC = () => {
 
       {/* Tools Row */}
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4 stagger-item">
-        <Card interactive onClick={() => navigate('/accommodation')} className="p-4 sm:p-5 flex flex-col h-full bg-white/40 dark:bg-dark-card/40 backdrop-blur-md border-white/20 dark:border-dark-border shadow-none hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
+        <Card interactive onClick={() => navigate('/accommodation')} className="p-4 sm:p-5 flex flex-col h-full bg-white dark:bg-dark-card/40 border-ivory-deep dark:border-dark-border shadow-sm hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
           <div className="w-10 h-10 sm:w-11 sm:h-11 bg-terracotta/10 text-terracotta rounded-xl flex items-center justify-center mb-3 sm:mb-4">
             <MapPin className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <h3 className="font-display text-[14px] sm:text-[16px] font-bold text-text-primary dark:text-text-dark-primary mb-1 leading-tight tracking-tight">Accommodation</h3>
           <p className="text-[11px] sm:text-[13px] text-text-secondary dark:text-text-dark-secondary leading-relaxed m-0 mt-auto opacity-70">Verify off-campus listings.</p>
         </Card>
-        <Card interactive onClick={() => navigate('/exams')} className="p-4 sm:p-5 flex flex-col h-full bg-white/40 dark:bg-dark-card/40 backdrop-blur-md border-white/20 dark:border-dark-border shadow-none hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
+        <Card interactive onClick={() => navigate('/exams')} className="p-4 sm:p-5 flex flex-col h-full bg-white dark:bg-dark-card/40 border-ivory-deep dark:border-dark-border shadow-sm hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
           <div className="w-10 h-10 sm:w-11 sm:h-11 bg-terracotta/10 text-terracotta rounded-xl flex items-center justify-center mb-3 sm:mb-4">
             <CalendarDays className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <h3 className="font-display text-[14px] sm:text-[16px] font-bold text-text-primary dark:text-text-dark-primary mb-1 leading-tight tracking-tight">Exam Planner</h3>
           <p className="text-[11px] sm:text-[13px] text-text-secondary dark:text-text-dark-secondary leading-relaxed m-0 mt-auto opacity-70">Manage the final rush.</p>
         </Card>
-        <Card interactive onClick={() => navigate('/calendar')} className="p-4 sm:p-5 flex flex-col h-full bg-white/40 dark:bg-dark-card/40 backdrop-blur-md border-white/20 dark:border-dark-border shadow-none hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
+        <Card interactive onClick={() => navigate('/calendar')} className="p-4 sm:p-5 flex flex-col h-full bg-white dark:bg-dark-card/40 border-ivory-deep dark:border-dark-border shadow-sm hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
           <div className="w-10 h-10 sm:w-11 sm:h-11 bg-terracotta/10 text-terracotta rounded-xl flex items-center justify-center mb-3 sm:mb-4">
             <Calendar className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <h3 className="font-display text-[14px] sm:text-[16px] font-bold text-text-primary dark:text-text-dark-primary mb-1 leading-tight tracking-tight">Timetable</h3>
           <p className="text-[11px] sm:text-[13px] text-text-secondary dark:text-text-dark-secondary leading-relaxed m-0 mt-auto opacity-70">Sync schedule locally.</p>
         </Card>
-        <Card interactive onClick={() => navigate('/notes')} className="p-4 sm:p-5 flex flex-col h-full bg-white/40 dark:bg-dark-card/40 backdrop-blur-md border-white/20 dark:border-dark-border shadow-none hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
+        <Card interactive onClick={() => navigate('/notes')} className="p-4 sm:p-5 flex flex-col h-full bg-white dark:bg-dark-card/40 border-ivory-deep dark:border-dark-border shadow-sm hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
           <div className="w-10 h-10 sm:w-11 sm:h-11 bg-terracotta/10 text-terracotta rounded-xl flex items-center justify-center mb-3 sm:mb-4">
             <StickyNote className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <h3 className="font-display text-[14px] sm:text-[16px] font-bold text-text-primary dark:text-text-dark-primary mb-1 leading-tight tracking-tight">Scratchpad</h3>
           <p className="text-[11px] sm:text-[13px] text-text-secondary dark:text-text-dark-secondary leading-relaxed m-0 mt-auto opacity-70">Quick lecture capture.</p>
         </Card>
-        <Card interactive onClick={() => navigate('/funding')} className="p-4 sm:p-5 flex flex-col h-full bg-white/40 dark:bg-dark-card/40 backdrop-blur-md border-white/20 dark:border-dark-border shadow-none hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
+        <Card interactive onClick={() => navigate('/funding')} className="p-4 sm:p-5 flex flex-col h-full bg-white dark:bg-dark-card/40 border-ivory-deep dark:border-dark-border shadow-sm hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
           <div className="w-10 h-10 sm:w-11 sm:h-11 bg-terracotta/10 text-terracotta rounded-xl flex items-center justify-center mb-3 sm:mb-4">
             <Coins className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <h3 className="font-display text-[14px] sm:text-[16px] font-bold text-text-primary dark:text-text-dark-primary mb-1 leading-tight tracking-tight">NSFAS Calc</h3>
           <p className="text-[11px] sm:text-[13px] text-text-secondary dark:text-text-dark-secondary leading-relaxed m-0 mt-auto opacity-70">Monitor funding gaps.</p>
         </Card>
-        <Card interactive onClick={() => navigate('/funding')} className="p-4 sm:p-5 flex flex-col h-full bg-white/40 dark:bg-dark-card/40 backdrop-blur-md border-white/20 dark:border-dark-border shadow-none hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
+        <Card interactive onClick={() => navigate('/funding')} className="p-4 sm:p-5 flex flex-col h-full bg-white dark:bg-dark-card/40 border-ivory-deep dark:border-dark-border shadow-sm hover:shadow-float hover:scale-[1.02] transition-all duration-slow ease-spring">
           <div className="w-10 h-10 sm:w-11 sm:h-11 bg-terracotta/10 text-terracotta rounded-xl flex items-center justify-center mb-3 sm:mb-4">
             <FileText className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
@@ -357,14 +357,14 @@ export const Landing: React.FC = () => {
 
       {/* Privacy & Future AI Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16 stagger-item">
-        <Card className="p-8 bg-ivory-warm/40 dark:bg-dark-card/40 border-none relative overflow-hidden">
+        <Card className="p-8 bg-ivory-warm dark:bg-dark-card/40 border-none relative overflow-hidden">
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-4">
               <ShieldCheck className="w-8 h-8 text-sage" />
-              <h3 className="text-xl font-display font-bold text-forest dark:text-ivory-warm">Sovereignty First</h3>
+              <h3 className="text-xl font-display font-bold text-forest dark:text-ivory-warm">Privacy First</h3>
             </div>
             <p className="text-[15px] leading-relaxed text-text-secondary dark:text-text-dark-secondary mb-6">
-              Thuthuka is built on a private-by-default architecture. Your data never leaves your device. No cloud sync, no tracking, no selling your academic journey.
+              Your data never leaves your device. No cloud sync, no tracking, no sharing your academic journey.
             </p>
             <div className="flex gap-2">
               <Badge variant="verified">Offline Encrypted</Badge>
@@ -376,18 +376,18 @@ export const Landing: React.FC = () => {
           </div>
         </Card>
 
-        <Card className="p-8 bg-forest dark:bg-dark-card text-ivory border-none relative overflow-hidden group">
+        <Card className="p-8 !bg-forest dark:!bg-dark-card text-ivory border-none relative overflow-hidden group">
           <div className="relative z-10 h-full flex flex-col">
             <div className="flex items-center gap-3 mb-4">
               <Cpu className="w-8 h-8 text-amber" />
-              <h3 className="text-xl font-display font-bold italic text-inherit">Synthetic Intelligence</h3>
+              <h3 className="text-xl font-display font-bold italic text-ivory">AI Study Planner</h3>
             </div>
             <p className="text-[15px] leading-relaxed opacity-80 mb-8">
-              We're integrating locally-run AI models to provide tactical insights into your degree. Analyze your lecture recordings and notes without leaking data to corporate clouds.
+              Get personalised study plans, exam strategies, and academic advice — powered by Claude AI and fully private.
             </p>
             <div className="mt-auto">
               <Button variant="secondary" className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-forest transition-colors" onClick={() => navigate('/about')}>
-                Tactical Roadmap
+                See Roadmap
               </Button>
             </div>
           </div>

@@ -111,7 +111,7 @@ export const Exams: React.FC = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8 sm:mb-10">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <Badge variant="danger" className="px-3 py-1">Tactical Readiness</Badge>
+            <Badge variant="danger" className="px-3 py-1">Exam Tracker</Badge>
             <div className="w-2 h-2 rounded-full bg-terracotta animate-pulse" />
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-forest dark:text-ivory-warm tracking-tighter leading-none mb-2">
@@ -139,7 +139,7 @@ export const Exams: React.FC = () => {
           </div>
 
           {sorted.length === 0 ? (
-            <div className="py-14 px-8 bg-ivory-warm/40 dark:bg-dark-card/30 rounded-[2rem] border-2 border-dashed border-ivory-deep dark:border-forest-mid/30 text-center">
+            <div className="py-14 px-8 bg-ivory-warm dark:bg-dark-card/30 rounded-[2rem] border-2 border-dashed border-ivory-deep dark:border-forest-mid/30 text-center">
               <Sparkles className="mx-auto mb-4 text-terracotta opacity-30" size={36} />
               <p className="text-text-secondary dark:text-text-dark-secondary font-medium text-sm">
                 Scan your timetable or add your first exam to get started.
@@ -157,7 +157,7 @@ export const Exams: React.FC = () => {
                     className={`exam-card p-4 sm:p-5 group transition-all border-none ${
                       isEditing
                         ? 'bg-white dark:bg-dark-card shadow-xl ring-2 ring-terracotta/20'
-                        : 'bg-white/60 dark:bg-dark-card/60 backdrop-blur-sm hover:shadow-float'
+                        : 'bg-white dark:bg-dark-card/60 hover:shadow-float'
                     }`}
                   >
                     {isEditing && editDraft ? (
@@ -274,9 +274,9 @@ export const Exams: React.FC = () => {
         <div className="flex flex-col gap-4">
 
           {/* SI Quick-Scan card */}
-          <Card className="p-5 sm:p-6 bg-forest text-ivory border-none shadow-float overflow-hidden relative group">
+          <Card className="p-5 sm:p-6 !bg-forest text-ivory border-none shadow-float overflow-hidden relative group">
             <div className="relative z-10">
-              <h3 className="text-base font-bold text-inherit mb-3 flex items-center gap-2">
+              <h3 className="text-base font-bold text-ivory mb-3 flex items-center gap-2">
                 <Brain size={18} className="text-amber" />
                 Quick-Scan
               </h3>

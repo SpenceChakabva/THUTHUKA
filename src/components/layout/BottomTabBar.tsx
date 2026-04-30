@@ -6,7 +6,7 @@ import { Home, MapPin, CalendarDays, Brain, User } from 'lucide-react';
 
 const NAV_ITEMS = [
   { path: '/home',         label: 'Home',    icon: Home },
-  { path: '/planner',     label: 'SI',       icon: Brain },
+  { path: '/planner',     label: 'AI',       icon: Brain },
   { path: '/accommodation', label: 'Accom',  icon: MapPin },
   { path: '/exams',       label: 'Exams',   icon: CalendarDays },
   { path: '/profile',     label: 'Profile', icon: User },

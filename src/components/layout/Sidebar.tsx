@@ -22,7 +22,7 @@ const NAV_SECTIONS = [
     label: 'Core',
     items: [
       { path: '/home',    label: 'Dashboard',  icon: Home },
-      { path: '/planner', label: 'SI Planner', icon: Brain, badge: 'AI' },
+      { path: '/planner', label: 'AI Planner', icon: Brain, badge: 'AI' },
     ],
   },
   {

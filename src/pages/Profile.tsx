@@ -82,12 +82,12 @@ export const Profile: React.FC = () => {
         </div>
         <div>
           <h1 className="text-3xl font-display font-bold text-forest dark:text-ivory-warm">Your Profile</h1>
-          <p className="text-text-secondary dark:text-text-dark-secondary">Context parameters for the SI Planner.</p>
+          <p className="text-text-secondary dark:text-text-dark-secondary">Your profile helps the AI give better advice.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <Card className="border-none shadow-sm flex flex-col gap-5 p-6 bg-white/60 dark:bg-dark-card/60 backdrop-blur-md">
+        <Card className="border-none shadow-sm flex flex-col gap-5 p-6 bg-white dark:bg-dark-card/60">
           <div className="flex flex-col gap-1.5">
             <label className="text-[11px] font-black uppercase tracking-widest text-text-muted">Faculty</label>
             <Select value={formData.faculty || ''} onChange={(e) => handleChange('faculty', e.target.value)}>
@@ -126,7 +126,7 @@ export const Profile: React.FC = () => {
           </div>
         </Card>
 
-        <Card className="border-none shadow-sm flex flex-col gap-5 p-6 bg-white/60 dark:bg-dark-card/60 backdrop-blur-md">
+        <Card className="border-none shadow-sm flex flex-col gap-5 p-6 bg-white dark:bg-dark-card/60">
           <div className="flex flex-col gap-1.5">
             <label className="text-[11px] font-black uppercase tracking-widest text-text-muted">NSFAS Status</label>
             <Select value={formData.nsfasStatus || ''} onChange={(e) => handleChange('nsfasStatus', e.target.value)}>
@@ -176,14 +176,14 @@ export const Profile: React.FC = () => {
       </div>
 
       {/* ── AI Settings ── */}
-      <Card className="mb-8 p-6 sm:p-8 bg-gradient-to-br from-ivory-warm/80 to-white dark:from-dark-card dark:to-dark-surface border-none shadow-md overflow-hidden relative">
+      <Card className="mb-8 p-6 sm:p-8 bg-gradient-to-br from-white to-ivory-warm dark:from-dark-card dark:to-dark-surface border-none shadow-md overflow-hidden relative">
         <div className="relative z-10">
           <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
             <Bot className="text-terracotta" size={22} />
-            Synthetic Intelligence Engine
+            AI Settings
           </h3>
           <p className="text-sm text-text-secondary dark:text-text-dark-secondary mb-6 max-w-lg leading-relaxed">
-            Choose how the SI connects to Claude/OpenAI. The server key is free but rate-limited. Bring Your Own Key (BYOK) for unlimited tactical planning.
+            Choose how the AI connects. The shared key is free but rate-limited. Add your own API key for unlimited access.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
@@ -198,7 +198,7 @@ export const Profile: React.FC = () => {
                 className={`flex-1 flex items-start gap-3 p-4 rounded-2xl border-2 transition-all text-left ${
                   (formData.apiProvider || 'server') === opt.id
                     ? 'border-terracotta bg-terracotta/5 shadow-sm'
-                    : 'border-ivory-deep dark:border-dark-border bg-white/40 dark:bg-dark-surface hover:border-terracotta/40'
+                    : 'border-ivory-deep dark:border-dark-border bg-white dark:bg-dark-surface hover:border-terracotta/40'
                 }`}
               >
                 <opt.icon size={18} className="text-terracotta shrink-0 mt-0.5" />
@@ -243,16 +243,16 @@ export const Profile: React.FC = () => {
         <div className="relative z-10">
           <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
             <ShieldCheck className="text-sage" size={22} />
-            Sovereignty & Portability
+            Your Data
           </h3>
           <p className="text-sm text-text-secondary dark:text-text-dark-secondary mb-6 max-w-lg leading-relaxed">
-            Thuthuka is built on a <strong>Local-First</strong> philosophy. Your context lives securely on this device. You can export a snapshot to sync devices, or purge everything instantly.
+            Your data lives on this device. Export a backup to sync across devices, or clear everything in one click.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Button variant="secondary" size="sm" onClick={handleExport} className="bg-white/80 dark:bg-dark-card shadow-sm border-none flex items-center gap-2">
+            <Button variant="secondary" size="sm" onClick={handleExport} className="bg-white dark:bg-dark-card shadow-sm border-none flex items-center gap-2">
               <Download size={16} /> Export JSON
             </Button>
-            <Button variant="secondary" size="sm" onClick={() => fileInputRef.current?.click()} className="bg-white/80 dark:bg-dark-card shadow-sm border-none flex items-center gap-2">
+            <Button variant="secondary" size="sm" onClick={() => fileInputRef.current?.click()} className="bg-white dark:bg-dark-card shadow-sm border-none flex items-center gap-2">
               <Upload size={16} /> Import JSON
             </Button>
             <input 
@@ -263,7 +263,7 @@ export const Profile: React.FC = () => {
               accept=".json"
             />
             <Button variant="danger" size="sm" onClick={handleClear} className="flex items-center gap-2 ml-auto shadow-sm">
-              <Trash2 size={16} /> Purge Identity
+              <Trash2 size={16} /> Clear All Data
             </Button>
           </div>
         </div>

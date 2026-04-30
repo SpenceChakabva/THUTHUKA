@@ -68,9 +68,9 @@ export const Layout: React.FC = () => {
                 <ShieldCheck className="text-terracotta" size={20} />
               </div>
               <div className="flex-1 text-center sm:text-left">
-                <h4 className="font-bold text-xs mb-1 uppercase tracking-widest">Tactical Sovereignty</h4>
+                <h4 className="font-bold text-xs mb-1 uppercase tracking-widest">Your Privacy</h4>
                 <p className="text-[11px] opacity-70 leading-relaxed">
-                  We use LocalStorage for offline intelligence. No trackers. No cookies. Pure performance.
+                  We use your browser's local storage to remember your data. No trackers. No external servers.
                 </p>
               </div>
               <Button size="sm" onClick={acceptConsent} className="bg-ivory text-forest hover:bg-ivory-warm whitespace-nowrap px-5 shrink-0">
@@ -112,7 +112,7 @@ export const Layout: React.FC = () => {
           }`}
         >
           <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 opacity-50">
-            <span>© 2026 Thuthuka Engine v2.4</span>
+            <span>© 2026 Thuthuka</span>
             <div className="flex gap-4">
               <Link to="/about" className="hover:text-terracotta transition-colors underline decoration-dotted">
                 About
@@ -141,7 +141,7 @@ export const Layout: React.FC = () => {
               <ShieldCheck size={18} />
             </div>
             <p className="flex-1 text-[11px] text-text-secondary dark:text-text-dark-secondary leading-snug">
-              LocalStorage powers offline tactical persistence.{' '}
+              Your data is stored locally on this device.{' '}
               <Link to="/privacy" className="text-terracotta font-bold hover:underline">
                 Privacy protocols
               </Link>
